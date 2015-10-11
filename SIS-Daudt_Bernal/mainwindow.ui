@@ -44,7 +44,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_openImage">
+       <widget class="QPushButton" name="pushButtonOpenImage">
         <property name="text">
          <string>Open Image</string>
         </property>
@@ -64,7 +64,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_seed1">
+       <widget class="QPushButton" name="pushButtonSeed1">
         <property name="text">
          <string>Seed 1</string>
         </property>
@@ -84,7 +84,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_seed2">
+       <widget class="QPushButton" name="pushButtonSeed2">
         <property name="text">
          <string>Seed 2</string>
         </property>
@@ -104,7 +104,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_segmentImage">
+       <widget class="QPushButton" name="pushButtonSegmentImage">
         <property name="text">
          <string>Segment Image</string>
         </property>
