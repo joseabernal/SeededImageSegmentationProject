@@ -1,12 +1,7 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QFileDialog>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
@@ -16,10 +11,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_openImage_clicked()
+
+void MainWindow::on_pushButtonOpenImage_clicked()
 {
     //Image location dialog
-    QString imagePath = QFileDialog::getOpenFileName(this, tr("Open Image"), "/home", tr("Image Files (*.png *.jpg *.bmp *.tiff)"));
+    QString imagePath = QFileDialog::getOpenFileName(
+        this,
+        tr("Open Image"),
+        "/home",
+        tr("Image Files (*.png *.jpg *.bmp *.tiff)"));
 
     // Open image with opencv
     cv::Mat inputImage = cv::imread(imagePath.toStdString());
@@ -35,4 +35,5 @@ void MainWindow::on_pushButton_openImage_clicked()
 //    Old stuff, opens image in main window as Qt object
 //    QPixmap chosenImage (imagePath)
 //    ui->label->setPixmap(chosenImage);
+    //Adding comment to test git, delete as soon as possible
 }

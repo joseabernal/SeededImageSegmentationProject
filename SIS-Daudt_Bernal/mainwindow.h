@@ -1,7 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QFileDialog>
 #include <QMainWindow>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include "ui_mainwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,9 +22,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_openImage_clicked();
+    void on_pushButtonOpenImage_clicked();
 
 private:
+    static const char* OPENFILEDIALOGTITLE = "Open Image";
     Ui::MainWindow *ui;
 };
 
