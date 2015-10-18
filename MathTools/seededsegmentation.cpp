@@ -1,20 +1,20 @@
 #include "seededsegmentation.h"
 
 SeededSegmentation::SeededSegmentation(
-	const Mat& inputImageIn,
-	const double& betaIn,
-	const double& sigmaIn) : inputImage(inputImageIn), beta(betaIn), sigma(sigmaIn) {
-	if (beta < 0) {
-		//TODO: This can be addressed as an exception
-		cerr<<"Beta value should be positive"<<endl;
-		throw 0;
-	}
+    const Mat& inputImageIn,
+    const double& betaIn,
+    const double& sigmaIn) : inputImage(inputImageIn), beta(betaIn), sigma(sigmaIn) {
+    if (beta < 0) {
+        //TODO: This can be addressed as an exception
+        cerr<<"Beta value should be positive"<<endl;
+        throw 0;
+    }
 
-	if (sigma <= 0) {
-		//TODO: This can be addressed as an exception
-		cerr<<"Sigma value should be greater than 0"<<endl;
-		throw 0;
-	}
+    if (sigma <= 0) {
+        //TODO: This can be addressed as an exception
+        cerr<<"Sigma value should be greater than 0"<<endl;
+        throw 0;
+    }
 }
 
 SeededSegmentation::~SeededSegmentation() {
@@ -22,16 +22,16 @@ SeededSegmentation::~SeededSegmentation() {
 }
 
 Mat SeededSegmentation::applyThresholding(
-	const Mat& image, const double& thresholdValue) {
-	Mat thresholdedImage;
+    const Mat& image, const double& thresholdValue) {
+    Mat thresholdedImage;
 
-	threshold(image, thresholdedImage, thresholdValue, MAX_BINARY_VALUE, THRESHOLD_TYPE);
+    threshold(image, thresholdedImage, thresholdValue, MAX_BINARY_VALUE, THRESHOLD_TYPE);
 
-	return thresholdedImage;
+    return thresholdedImage;
 }
 
 SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
-	const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
+    const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
     const unsigned int neighborhoodSize = 8;
     const int dy[neighborhoodSize] = {-1, -1, -1, 0, 0, 1, 1, 1};
     const int dx[neighborhoodSize] = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -48,9 +48,9 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
                 if (i + dy[k] < 0 || i + dy[k] >= inputImage.rows) continue;
                 if (j + dx[k] < 0 || j + dx[k] >= inputImage.cols) continue;
                 double value = 
-                	norm(inputImage.at<Vec3f>(i, j),
-                		inputImage.at<Vec3f>(i + dy[k], j + dx[k]),
-                		NORM_INF);
+                    norm(inputImage.at<Vec3f>(i, j),
+                        inputImage.at<Vec3f>(i + dy[k], j + dx[k]),
+                        NORM_INF);
                 value = exp(betasigma * value * value);
                 value /= EPSILON;
                 value = round(value);
@@ -71,8 +71,8 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
 }
 
 Mat SeededSegmentation::segment(
-	const Mat& backgroundImage, const Mat& foregroundImage) {
-	const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
+    const Mat& backgroundImage, const Mat& foregroundImage) {
+    const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
 
     SparseMatrix<double> Is(numberOfPixels, numberOfPixels);
     VectorXd b(numberOfPixels);
@@ -111,5 +111,5 @@ Mat SeededSegmentation::segment(
         final.at<float>(i) = x(i);
     }
 
-	return applyThresholding(final, threshold);
+    return applyThresholding(final, threshold);
 }
