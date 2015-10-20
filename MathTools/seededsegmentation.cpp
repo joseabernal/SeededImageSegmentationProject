@@ -1,20 +1,20 @@
 #include "seededsegmentation.h"
 
 SeededSegmentation::SeededSegmentation(
-    const Mat& inputImageIn,
-    const double& betaIn,
-    const double& sigmaIn) : inputImage(inputImageIn), beta(betaIn), sigma(sigmaIn) {
-    if (beta < 0) {
-        //TODO: This can be addressed as an exception
-        cerr<<"Beta value should be positive"<<endl;
-        throw 0;
-    }
+	const Mat& inputImageIn,
+	const double& betaIn,
+	const double& sigmaIn) : inputImage(inputImageIn), beta(betaIn), sigma(sigmaIn) {
+	if (beta < 0) {
+		//TODO: This can be addressed as an exception
+		cerr<<"Beta value should be positive"<<endl;
+		throw 0;
+	}
 
-    if (sigma <= 0) {
-        //TODO: This can be addressed as an exception
-        cerr<<"Sigma value should be greater than 0"<<endl;
-        throw 0;
-    }
+	if (sigma <= 0) {
+		//TODO: This can be addressed as an exception
+		cerr<<"Sigma value should be greater than 0"<<endl;
+		throw 0;
+	}
 }
 
 SeededSegmentation::~SeededSegmentation() {
@@ -22,25 +22,26 @@ SeededSegmentation::~SeededSegmentation() {
 }
 
 Mat SeededSegmentation::applyThresholding(
-    const Mat& image, const double& thresholdValue) {
-    Mat thresholdedImage;
+	const Mat& image, const double& thresholdValue) {
+	Mat thresholdedImage;
 
-    threshold(image, thresholdedImage, thresholdValue, MAX_BINARY_VALUE, THRESHOLD_TYPE);
+	threshold(image, thresholdedImage, thresholdValue, MAX_BINARY_VALUE, THRESHOLD_TYPE);
 
-    return thresholdedImage;
+	return thresholdedImage;
 }
 
 SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
-    const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
+	const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
     const unsigned int neighborhoodSize = 8;
     const int dy[neighborhoodSize] = {-1, -1, -1, 0, 0, 1, 1, 1};
     const int dx[neighborhoodSize] = {-1, 0, 1, -1, 1, -1, 0, 1};
     const double betasigma = -beta/sigma;
 
-    SparseMatrix<double> laplacian(numberOfPixels, numberOfPixels);
-    laplacian.reserve(neighborhoodSize * numberOfPixels);
+    SparseMatrix<double> w(numberOfPixels, numberOfPixels);
+    SparseMatrix<double> d(numberOfPixels, numberOfPixels);
+    d.reserve(VectorXi::Constant(numberOfPixels, 1));
+    w.reserve(VectorXi::Constant(numberOfPixels, 8));
 
-    vector< Triplet<double> > triplets;
     for (int i = 0; i < inputImage.rows; i++) {
         for (int j = 0; j < inputImage.cols; j++) {
             double dijValue = 0;
@@ -48,9 +49,9 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
                 if (i + dy[k] < 0 || i + dy[k] >= inputImage.rows) continue;
                 if (j + dx[k] < 0 || j + dx[k] >= inputImage.cols) continue;
                 double value = 
-                    norm(inputImage.at<Vec3f>(i, j),
-                        inputImage.at<Vec3f>(i + dy[k], j + dx[k]),
-                        NORM_INF);
+                	norm(inputImage.at<Vec3f>(i, j),
+                		inputImage.at<Vec3f>(i + dy[k], j + dx[k]),
+                		NORM_INF);
                 value = exp(betasigma * value * value);
                 value /= EPSILON;
                 value = round(value);
@@ -58,21 +59,19 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
                 value += EPSILON;
                 dijValue += value;
 
-                triplets.push_back(Triplet<double>(i * inputImage.cols + j, (i + dy[k]) * inputImage.cols + (j + dx[k]), -value));
+                w.insert(i * inputImage.cols + j, (i + dy[k]) * inputImage.cols + (j + dx[k])) = -value;
             }
 
-            triplets.push_back(Triplet<double>(i * inputImage.cols + j, i * inputImage.cols + j, dijValue));
+            d.insert(i * inputImage.cols + j, i * inputImage.cols + j) = dijValue;
         }
     }
 
-    laplacian.setFromTriplets(triplets.begin(), triplets.end());
-
-    return laplacian;
+    return w + d;
 }
 
 Mat SeededSegmentation::segment(
-    const Mat& backgroundImage, const Mat& foregroundImage) {
-    const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
+	const Mat& backgroundImage, const Mat& foregroundImage) {
+	const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
 
     SparseMatrix<double> Is(numberOfPixels, numberOfPixels);
     VectorXd b(numberOfPixels);
@@ -82,11 +81,11 @@ Mat SeededSegmentation::segment(
         b[i] = backgroundImage.at<bool>(i) - foregroundImage.at<bool>(i);
     }
 
-    SparseMatrix<double> L = calculateLaplacian();
-    SparseMatrix<double> L2 = (L * L).pruned();
+    SparseMatrix<double> laplacian = calculateLaplacian();
+    SparseMatrix<double> squaredLaplacian = (laplacian * laplacian);
 
     SimplicialLLT < SparseMatrix<double> > solver;
-    solver.compute(Is + L2);
+    solver.compute(Is + squaredLaplacian);
 
     if(solver.info() != Success) {
         //TODO: This can be addressed as an exception
@@ -111,5 +110,5 @@ Mat SeededSegmentation::segment(
         final.at<float>(i) = x(i);
     }
 
-    return applyThresholding(final, threshold);
+	return applyThresholding(final, threshold);
 }
