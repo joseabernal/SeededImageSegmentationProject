@@ -37,10 +37,11 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
     const int dx[neighborhoodSize] = {-1, 0, 1, -1, 1, -1, 0, 1};
     const double betasigma = -beta/sigma;
 
-    SparseMatrix<double> laplacian(numberOfPixels, numberOfPixels);
-    laplacian.reserve(neighborhoodSize * numberOfPixels);
+    SparseMatrix<double> w(numberOfPixels, numberOfPixels);
+    SparseMatrix<double> d(numberOfPixels, numberOfPixels);
+    d.reserve(VectorXi::Constant(numberOfPixels, 1));
+    w.reserve(VectorXi::Constant(numberOfPixels, 8));
 
-    vector< Triplet<double> > triplets;
     for (int i = 0; i < inputImage.rows; i++) {
         for (int j = 0; j < inputImage.cols; j++) {
             double dijValue = 0;
@@ -58,16 +59,14 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
                 value += EPSILON;
                 dijValue += value;
 
-                triplets.push_back(Triplet<double>(i * inputImage.cols + j, (i + dy[k]) * inputImage.cols + (j + dx[k]), -value));
+                w.insert(i * inputImage.cols + j, (i + dy[k]) * inputImage.cols + (j + dx[k])) = -value;
             }
 
-            triplets.push_back(Triplet<double>(i * inputImage.cols + j, i * inputImage.cols + j, dijValue));
+            d.insert(i * inputImage.cols + j, i * inputImage.cols + j) = dijValue;
         }
     }
 
-    laplacian.setFromTriplets(triplets.begin(), triplets.end());
-
-    return laplacian;
+    return w + d;
 }
 
 Mat SeededSegmentation::segment(
@@ -82,11 +81,11 @@ Mat SeededSegmentation::segment(
         b[i] = backgroundImage.at<bool>(i) - foregroundImage.at<bool>(i);
     }
 
-    SparseMatrix<double> L = calculateLaplacian();
-    SparseMatrix<double> L2 = (L * L).pruned();
+    SparseMatrix<double> laplacian = calculateLaplacian();
+    SparseMatrix<double> squaredLaplacian = (laplacian * laplacian);
 
     SimplicialLLT < SparseMatrix<double> > solver;
-    solver.compute(Is + L2);
+    solver.compute(Is + squaredLaplacian);
 
     if(solver.info() != Success) {
         //TODO: This can be addressed as an exception
