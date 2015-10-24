@@ -9,6 +9,9 @@
 
 #include "ui_mainwindow.h"
 
+#include "displaywindow.h"
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -25,7 +28,9 @@ private slots:
     void on_pushButtonOpenImage_clicked();
 
 private:
-    static const char* OPENFILEDIALOGTITLE = "Open Image";
+    DisplayWindow disp;
+    cv::Mat inputImage;
+
     Ui::MainWindow *ui;
 };
 
