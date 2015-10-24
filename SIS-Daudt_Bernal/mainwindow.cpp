@@ -21,19 +21,18 @@ void MainWindow::on_pushButtonOpenImage_clicked()
         "/home",
         tr("Image Files (*.png *.jpg *.bmp *.tiff)"));
 
-    // Open image with opencv
-    cv::Mat inputImage = cv::imread(imagePath.toStdString());
+    if (imagePath.isEmpty()) // Do nothing if filename is empty
+        return;
 
-    cv::namedWindow("Displaying chosen image");
-    cv::imshow("Displaying chosen image", inputImage);
 
-    // Trying to handle events on window
-    //cv::setMouseCallback("Displaying chosen image", onMouse, 0);
+    inputImage = cv::imread(imagePath.toStdString());
+    if (inputImage.empty())
+        return;
 
-    //TODO: Do I need a destructor for namedWindow?
+    disp.show();
+    disp.move(100,100);
+    disp.displayImage(inputImage);
 
-//    Old stuff, opens image in main window as Qt object
-//    QPixmap chosenImage (imagePath)
-//    ui->label->setPixmap(chosenImage);
-    //Adding comment to test git, delete as soon as possible
+
 }
+
