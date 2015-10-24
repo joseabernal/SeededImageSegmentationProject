@@ -2,16 +2,18 @@
 #define SEEDED_SEGMENTATION_H
 
 #include <iostream>
-#include <vector>
 
 #include <opencv2/core/core.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include <Eigen/Sparse>
 
+#include "Exceptions/mathexception.h"
+#include "Exceptions/userinputexception.h"
+
 using namespace cv;
-using namespace Eigen;
-using namespace std;
+using Eigen::SparseMatrix;
+using Eigen::VectorXd;
 
 /**
  * This class segment a given input image using the laplacian seeded segmentation

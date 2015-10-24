@@ -5,15 +5,11 @@ SeededSegmentation::SeededSegmentation(
     const double& betaIn,
     const double& sigmaIn) : inputImage(inputImageIn), beta(betaIn), sigma(sigmaIn) {
     if (beta < 0) {
-        //TODO: This can be addressed as an exception
-        cerr<<"Beta value should be positive"<<endl;
-        throw 0;
+        throw UserInputException("Beta value should be positive");
     }
 
     if (sigma <= 0) {
-        //TODO: This can be addressed as an exception
-        cerr<<"Sigma value should be greater than 0"<<endl;
-        throw 0;
+        throw UserInputException("Sigma value should be greater than 0");
     }
 }
 
@@ -39,8 +35,8 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
 
     SparseMatrix<double> w(numberOfPixels, numberOfPixels);
     SparseMatrix<double> d(numberOfPixels, numberOfPixels);
-    d.reserve(VectorXi::Constant(numberOfPixels, 1));
-    w.reserve(VectorXi::Constant(numberOfPixels, 8));
+    d.reserve(VectorXd::Constant(numberOfPixels, 1));
+    w.reserve(VectorXd::Constant(numberOfPixels, 8));
 
     for (int i = 0; i < inputImage.rows; i++) {
         for (int j = 0; j < inputImage.cols; j++) {
@@ -51,7 +47,7 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
                 double value = 
                     norm(inputImage.at<Vec3f>(i, j),
                         inputImage.at<Vec3f>(i + dy[k], j + dx[k]),
-                        NORM_INF);
+                        cv::NORM_INF);
                 value = exp(betasigma * value * value);
                 value /= EPSILON;
                 value = round(value);
@@ -74,6 +70,7 @@ Mat SeededSegmentation::segment(
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
 
     SparseMatrix<double> Is(numberOfPixels, numberOfPixels);
+    Is.reserve(VectorXd::Constant(numberOfPixels, 1));
     VectorXd b(numberOfPixels);
 
     for (unsigned int i = 0; i < numberOfPixels; i++) {
@@ -82,23 +79,18 @@ Mat SeededSegmentation::segment(
     }
 
     SparseMatrix<double> laplacian = calculateLaplacian();
-    SparseMatrix<double> squaredLaplacian = (laplacian * laplacian);
 
-    SimplicialLLT < SparseMatrix<double> > solver;
-    solver.compute(Is + squaredLaplacian);
+    Eigen::SimplicialLLT < SparseMatrix<double> > solver;
+    solver.compute(Is + laplacian * laplacian);
 
-    if(solver.info() != Success) {
-        //TODO: This can be addressed as an exception
-        cerr<<"Decomposition failed"<<endl;
-        throw 0;
+    if(solver.info() != Eigen::Success) {
+        throw MathException("Decomposition failed");
     }
     
     VectorXd x = solver.solve(b);
 
-    if(solver.info() != Success) {
-        //TODO: This can be addressed as an exception
-        cerr<<"Solving failed"<<endl;
-        throw 0;
+    if(solver.info() != Eigen::Success) {
+        throw MathException("Solving failed");
     }
 
     const double backgroundValue = 1;
