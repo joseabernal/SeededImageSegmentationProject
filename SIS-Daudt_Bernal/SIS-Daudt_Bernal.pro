@@ -11,13 +11,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = SIS-Daudt_Bernal
 TEMPLATE = app
 
-INCLUDEPATH += /usr/include/opencv2 #added manually
+#added manually
+INCLUDEPATH += /usr/include/opencv
 
-LIBS += -L/usr/lib -lopencv_core -lopencv_highgui #added manually
+#added manually
+LIBS += -L/usr/lib -lopencv_core -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    displaywindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    displaywindow.h
 
 FORMS    += mainwindow.ui
