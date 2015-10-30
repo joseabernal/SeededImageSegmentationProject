@@ -52,6 +52,13 @@ class SeededSegmentation
          */
         Mat applyThresholding(const Mat& image, const double& threshold);
 
+        Mat interpretSolution(
+            const VectorXd& x, const unsigned int& rows, const unsigned int& cols);
+
+        VectorXd solveSystem(const SparseMatrix<double>& A, const VectorXd& b);
+
+
+
         /**
          * Calculates the laplacian matrix.
          *

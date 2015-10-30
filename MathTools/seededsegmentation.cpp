@@ -87,8 +87,15 @@ Mat SeededSegmentation::segment(
 
     SparseMatrix<double> laplacian = calculateLaplacian(inputImage, beta, sigma);
 
+    VectorXd x = solveSystem(Is + laplacian * laplacian, b);
+
+    return interpretSolution(x, inputImage.rows, inputImage.cols);
+}
+
+VectorXd SeededSegmentation::solveSystem(
+    const SparseMatrix<double>& A, const VectorXd& b) {
     Eigen::SimplicialLLT < SparseMatrix<double> > solver;
-    solver.compute(Is + laplacian * laplacian);
+    solver.compute(A);
 
     if(solver.info() != Eigen::Success) {
         throw MathException("Decomposition failed");
@@ -100,12 +107,17 @@ Mat SeededSegmentation::segment(
         throw MathException("Solving failed");
     }
 
+    return x;
+}
+
+Mat SeededSegmentation::interpretSolution(
+    const VectorXd& x, const unsigned int& rows, const unsigned int& cols) {
     const double backgroundValue = 1;
     const double foregroundValue = -1;
     const double threshold = (backgroundValue + foregroundValue) / 2;
 
-    Mat final = Mat::zeros(inputImage.rows, inputImage.cols, CV_32FC1);
-    for (unsigned int i = 0; i < numberOfPixels; i++) {
+    Mat final = Mat::zeros(rows, cols, CV_32FC1);
+    for (unsigned int i = 0; i < x.size(); i++) {
         final.at<float>(i) = x(i);
     }
 
