@@ -47,17 +47,49 @@ class SegmentationEventHandler {
 
     public:
 
+        /**
+         * Default constructor.
+         */
         SegmentationEventHandler();
+
+        /**
+         * Class destructor.
+         */
         ~SegmentationEventHandler();
 
+        /**
+         * Load image on filePath
+         *
+         * @param filePath path of the file to load
+         *
+         * @return QImage loaded image
+         */
         QImage loadImage(const string& filePath);
 
+        /**
+         * Calls the seededsegmentation class with the given inputs.
+         *
+         * @param image image to be segmented
+         * @param backgroundImage background image to segment
+         * @param foregroundImage foreground image to segment
+         * @param beta tuning variable
+         *
+         * @return QImage loaded image
+         */
         QImage segment(
             const QImage& image,
             const QImage& backgroundImage,
             const QImage& foregroundImage,
             const double& beta);
         
+        /**
+         * Load image on filePath
+         *
+         * @param image image to save
+         * @param filePath path to save the image
+         *
+         * @return true if the process was successful
+         */
         bool saveImage(const QImage& image, const string& filePath);
 };
 
