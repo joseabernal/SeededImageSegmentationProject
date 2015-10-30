@@ -43,21 +43,6 @@ class SeededSegmentation
         static const double EPSILON = 0.0000001;
 
         /**
-         * Image to be segmented
-         */
-        const Mat inputImage;
-
-        /**
-         * The value of beta to use to determine the weights of neighbours
-         */
-        const double beta;
-
-        /**
-         * The value of sigma to use to determine the weights of neighbours
-         */
-        const double sigma;
-
-        /**
          * Applies a certain threshold on the image.
          * 
          * @param image image to process
@@ -72,7 +57,7 @@ class SeededSegmentation
          *
          * @return a sparse matrix
          */
-        SparseMatrix<double> calculateLaplacian();
+        SparseMatrix<double> calculateLaplacian(const Mat& inputImage, const double& beta, const double& sigma);
 
     protected:
 
@@ -80,20 +65,8 @@ class SeededSegmentation
 
         /**
          * Default constructor.
-         *
-         * @param inputImage Image to be segmented.
-         * @param beta corresponds to a tuning constant weighting the neighborhood
-         * @param sigma corresponds to the maximum value among the all diferences.
-         *         A different value can be received but it should be positive.
-         * 
-         * @return A binary matrix Mat containing the segmented image. This
-         *        matrix will contain 0 if the pixel belongs to the foreground and
-         *        1 otherwise.
          */
-        SeededSegmentation(
-            const Mat& inputImage,
-            const double& beta,
-            const double& sigma);
+        SeededSegmentation();
 
         /**
          * Class destructor
@@ -105,18 +78,27 @@ class SeededSegmentation
          * corresponding segmentation given the input, background and
          * foreground images.
          *
+         * @param inputImage Image to be segmented.
          * @param backgroundImage Matrix Mat containing the background image.
          *         This matrix should contain 0 if the pixel belongs to the
          *        background and 1 otherwise.
          * @param foregroundImage Matrix Mat containing the foreground image.
          *         This matrix should contain 0 if the pixel belongs to the
          *        foreground and 1 otherwise.
+         * @param beta corresponds to a tuning constant weighting the neighborhood
+         * @param sigma corresponds to the maximum value among the all diferences.
+         *         A different value can be received but it should be positive.
          *
          * @return A binary matrix Mat containing the segmented image. This
          *        matrix will contain 0 if the pixel belongs to the
          *        foreground and 1 otherwise.
          */
-        Mat segment(const Mat& backgroundImage, const Mat& foregroundImage);
+        Mat segment(
+            const Mat& inputImage,
+            const Mat& backgroundImage,
+            const Mat& foregroundImage,
+            const double& beta,
+            const double& sigma);
 };
 
 #endif 
