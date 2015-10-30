@@ -78,7 +78,12 @@ class SeededSegmentation
         /**
          * Calculates the laplacian matrix.
          *
-         * @return a sparse matrix
+         * @param inputImage image to be segmented
+         * @param beta corresponds to a tuning constant weighting the neighborhood
+         * @param sigma corresponds to the maximum value among the all diferences.
+         *     A different value can be received but it should be positive.
+         *
+         * @return a sparse matrix representing the laplacian
          */
         SparseMatrix<double> calculateLaplacian(const Mat& inputImage, const double& beta, const double& sigma);
 
