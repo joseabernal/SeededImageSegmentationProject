@@ -1,10 +1,8 @@
 #ifndef SEEDED_SEGMENTATION_H
 #define SEEDED_SEGMENTATION_H
 
-#include <iostream>
-
 #include <opencv2/core/core.hpp>
-#include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <Eigen/Sparse>
 
@@ -85,7 +83,8 @@ class SeededSegmentation
          *
          * @return a sparse matrix representing the laplacian
          */
-        SparseMatrix<double> calculateLaplacian(const Mat& inputImage, const double& beta, const double& sigma);
+        SparseMatrix<double> calculateLaplacian(
+            const Mat& inputImage, const double& beta, const double& sigma);
 
     protected:
 
@@ -126,7 +125,7 @@ class SeededSegmentation
             const Mat& backgroundImage,
             const Mat& foregroundImage,
             const double& beta,
-            const double& sigma);
+            const double& sigma = 0.1);
 };
 
 #endif 

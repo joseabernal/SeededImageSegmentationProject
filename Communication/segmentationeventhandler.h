@@ -28,7 +28,7 @@ class SegmentationEventHandler {
          *
          * @return the converted cv::Mat object
          *
-         * @see http://stackoverflow.com/questions/17127762/cvmat-to-qimage-and-back
+         * @see http://answers.opencv.org/question/9075/how-do-i-save-qimage-in-cvmat/
          */
         Mat QImage2Mat(const QImage& image);
 
@@ -39,7 +39,7 @@ class SegmentationEventHandler {
          *
          * @return the converted QImage object
          *
-         * @see http://stackoverflow.com/questions/17127762/cvmat-to-qimage-and-back
+         * @see http://answers.opencv.org/question/9075/how-do-i-save-qimage-in-cvmat/
          */
         QImage Mat2QImage(const Mat& image);
 
@@ -78,8 +78,8 @@ class SegmentationEventHandler {
          */
         QImage segment(
             const QImage& image,
-            const QImage& backgroundImage,
-            const QImage& foregroundImage,
+            const Mat& backgroundImage,
+            const Mat& foregroundImage,
             const double& beta);
         
         /**

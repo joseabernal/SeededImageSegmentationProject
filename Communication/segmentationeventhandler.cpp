@@ -7,40 +7,57 @@ SegmentationEventHandler::~SegmentationEventHandler() {
 
 }
 
-Mat SegmentationEventHandler::QImage2Mat(QImage const& src) {
-    Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
-    Mat result;
-    cvtColor(tmp, result,CV_BGR2RGB);
-    return result;
+Mat SegmentationEventHandler::QImage2Mat(const QImage& src) {
+    unsigned int height = src.height();
+    unsigned int width = src.width();
+    cv::Mat3f dest(height, width);
+    
+    for (unsigned int i = 0; i < height; i++) {
+        cv::Vec3f* destrow = dest[i];
+        for (unsigned int j = 0; j < width; j++) {
+            QRgb pxl = src.pixel(j, i);
+            destrow[j] = cv::Vec3f(qBlue(pxl), qGreen(pxl), qRed(pxl));
+        }
+    }
+
+    return dest;
 }
 
-QImage SegmentationEventHandler::Mat2QImage(Mat const& src)
+QImage SegmentationEventHandler::Mat2QImage(const Mat& src)
 {
-    Mat temp;
-    cvtColor(src, temp,CV_BGR2RGB);
-    QImage dest(
-       (const uchar *) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
-    dest.bits();
+    QImage dest(src.rows, src.cols, QImage::Format_RGB32);
+    
+    for (unsigned int i = 0; i < src.rows; i++) {
+        for (unsigned int j = 0; j < src.cols; j++) {
+            Vec3f data = src.at<Vec3f>(i, j);
+            QRgb pixel = qRgb((int)(data[0]), (int)(data[1]), (int)(data[2]));
+            dest.setPixel(j, i, pixel);
+        }
+    }
+
     return dest;
 }
 
 QImage SegmentationEventHandler::loadImage(const string& filePath) {
-    return Mat2QImage(imread(filePath, CV_32FC3));
+    QImage image;
+    image.load(filePath.c_str());
+    return image;
 }
 
 QImage SegmentationEventHandler::segment(
-    const QImage& img, const QImage& bgImage, const QImage& fgImage, const double& beta) {
+    const QImage& img, const Mat& backgroundImage, const Mat& foregroundImage, const double& beta) {
     Mat inputImage = QImage2Mat(img);
-    Mat backgroundImage = QImage2Mat(bgImage);
-    Mat foregroundImage = QImage2Mat(fgImage);
 
-    return Mat2QImage(segmenter.segment(inputImage, backgroundImage, foregroundImage, beta, 0.1));
+    normalize(inputImage, inputImage, 0.0, 1.0, NORM_MINMAX, CV_32FC3);
+
+    return Mat2QImage(
+        segmenter.segment(inputImage, backgroundImage, foregroundImage, beta));
 }
 
 bool SegmentationEventHandler::saveImage(
     const QImage& img, const string& filePath) {
-    Mat image = QImage2Mat(img);
-    imwrite(filePath, image);
+    QImage image = img;
+    image.save(filePath.c_str());
 
     return true;
 }

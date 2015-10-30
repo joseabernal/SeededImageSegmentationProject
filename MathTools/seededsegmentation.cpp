@@ -116,9 +116,9 @@ Mat SeededSegmentation::interpretSolution(
     const double foregroundValue = -1;
     const double threshold = (backgroundValue + foregroundValue) / 2;
 
-    Mat final = Mat::zeros(rows, cols, CV_32FC1);
+    Mat final = Mat::zeros(rows, cols, CV_32FC3);
     for (unsigned int i = 0; i < x.size(); i++) {
-        final.at<float>(i) = x(i);
+        final.at<Vec3f>(i) = cv::Point3f(x(i), x(i), x(i));
     }
 
     return applyThresholding(final, threshold);
