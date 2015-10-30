@@ -52,12 +52,28 @@ class SeededSegmentation
          */
         Mat applyThresholding(const Mat& image, const double& threshold);
 
+        /**
+         * Transforms the vector x from the system Ax = b into a image containing
+         * the segmentation.
+         *
+         * @param x vector to be interpretated
+         * @param rows rows of the original image
+         * @param cols columns of the original image
+         * 
+         * @return a binary image in which 0 represents foreground and 1 background.
+         */
         Mat interpretSolution(
             const VectorXd& x, const unsigned int& rows, const unsigned int& cols);
 
+        /**
+         * Solves the system Ax = b. 
+         *
+         * @param A sparse matrix
+         * @param b vector b
+         * 
+         * @return the solution vector, x.
+         */
         VectorXd solveSystem(const SparseMatrix<double>& A, const VectorXd& b);
-
-
 
         /**
          * Calculates the laplacian matrix.
