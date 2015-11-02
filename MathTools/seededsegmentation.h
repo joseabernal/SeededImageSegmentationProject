@@ -1,8 +1,6 @@
 #ifndef SEEDED_SEGMENTATION_H
 #define SEEDED_SEGMENTATION_H
 
-#include <utility>
-
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -15,7 +13,6 @@
 using Eigen::SparseMatrix;
 using Eigen::VectorXd;
 using namespace cv;
-using std::pair;
 
 /**
  * This class segment a given input image using the laplacian seeded segmentation
