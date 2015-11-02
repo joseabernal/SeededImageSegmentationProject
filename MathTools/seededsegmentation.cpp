@@ -12,34 +12,37 @@ Mat SeededSegmentation::applyThresholding(
     const Mat& image, const double& thresholdValue) {
     Mat thresholdedImage;
 
-    threshold(image, thresholdedImage, thresholdValue, MAX_BINARY_VALUE, THRESHOLD_TYPE);
+    threshold(
+        image, thresholdedImage, thresholdValue, MAX_BINARY_VALUE, THRESHOLD_TYPE);
 
     return thresholdedImage;
 }
 
 SparseMatrix<double> SeededSegmentation::calculateLaplacian(
-    const Mat& inputImage, const double& beta, const double& sigma) {
+    const Mat& inputImage,
+    const double& beta,
+    const double& sigma,
+    const Neighbourhood& neighbourhood) {
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
-    const unsigned int pixelsInWindow = 9;
-    const unsigned int neighborhoodSize = 8;
-    const int dy[neighborhoodSize] = {-1, -1, -1, 0, 0, 1, 1, 1};
-    const int dx[neighborhoodSize] = {-1, 0, 1, -1, 1, -1, 0, 1};
+    const unsigned int pixelsInWindow = neighbourhood.size() + 1;
     const double betasigma = -beta/sigma;
 
     SparseMatrix<double> w(numberOfPixels, numberOfPixels);
     SparseMatrix<double> d(numberOfPixels, numberOfPixels);
-    d.reserve(VectorXd::Constant(numberOfPixels, pixelsInWindow - neighborhoodSize));
-    w.reserve(VectorXd::Constant(numberOfPixels, neighborhoodSize));
+    d.reserve(
+        VectorXd::Constant(numberOfPixels, pixelsInWindow - neighbourhood.size()));
+    w.reserve(VectorXd::Constant(numberOfPixels, neighbourhood.size()));
 
     for (int i = 0; i < inputImage.rows; i++) {
         for (int j = 0; j < inputImage.cols; j++) {
             double dijValue = 0;
-            for (unsigned int k = 0; k < neighborhoodSize; k++) {
-                if (i + dy[k] < 0 || i + dy[k] >= inputImage.rows) continue;
-                if (j + dx[k] < 0 || j + dx[k] >= inputImage.cols) continue;
+            for (unsigned int k = 0; k < neighbourhood.size(); k++) {
+                Point2i pos = neighbourhood(k);
+                if (i + pos.y < 0 || i + pos.y >= inputImage.rows) continue;
+                if (j + pos.x < 0 || j + pos.x >= inputImage.cols) continue;
                 double value = 
                     norm(inputImage.at<Vec3f>(i, j),
-                        inputImage.at<Vec3f>(i + dy[k], j + dx[k]),
+                        inputImage.at<Vec3f>(i + pos.y, j + pos.x),
                         cv::NORM_INF);
                 value = exp(betasigma * value * value);
                 value /= EPSILON;
@@ -48,7 +51,9 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian(
                 value += EPSILON;
                 dijValue += value;
 
-                w.insert(i * inputImage.cols + j, (i + dy[k]) * inputImage.cols + (j + dx[k])) = -value;
+                w.insert(
+                    i * inputImage.cols + j,
+                    (i + pos.y) * inputImage.cols + (j + pos.x)) = -value;
             }
 
             d.insert(i * inputImage.cols + j, i * inputImage.cols + j) = dijValue;
@@ -72,20 +77,23 @@ Mat SeededSegmentation::segment(
         throw UserInputException("Sigma value should be greater than 0");
     }
 
-    const unsigned int pixelsInWindow = 9;
-    const unsigned int neighborhoodSize = 8;
+    const Neighbourhood neighbourhood(3, 3);
+    const unsigned int pixelsInWindow = neighbourhood.size() + 1;
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
 
     SparseMatrix<double> Is(numberOfPixels, numberOfPixels);
-    Is.reserve(VectorXd::Constant(numberOfPixels, pixelsInWindow - neighborhoodSize));
+    Is.reserve(
+        VectorXd::Constant(numberOfPixels, pixelsInWindow - neighbourhood.size()));
     VectorXd b(numberOfPixels);
 
     for (unsigned int i = 0; i < numberOfPixels; i++) {
-        Is.insert(i, i) = backgroundImage.at<bool>(i) || foregroundImage.at<bool>(i);
+        Is.insert(i, i) = 
+            backgroundImage.at<bool>(i) || foregroundImage.at<bool>(i);
         b[i] = backgroundImage.at<bool>(i) - foregroundImage.at<bool>(i);
     }
 
-    SparseMatrix<double> laplacian = calculateLaplacian(inputImage, beta, sigma);
+    SparseMatrix<double> laplacian =
+        calculateLaplacian(inputImage, beta, sigma, neighbourhood);
 
     VectorXd x = solveSystem(Is + laplacian * laplacian, b);
 
