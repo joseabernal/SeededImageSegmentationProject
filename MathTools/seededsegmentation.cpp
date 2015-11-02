@@ -1,16 +1,7 @@
 #include "seededsegmentation.h"
 
-SeededSegmentation::SeededSegmentation(
-    const Mat& inputImageIn,
-    const double& betaIn,
-    const double& sigmaIn) : inputImage(inputImageIn), beta(betaIn), sigma(sigmaIn) {
-    if (beta < 0) {
-        throw UserInputException("Beta value should be positive");
-    }
+SeededSegmentation::SeededSegmentation() {
 
-    if (sigma <= 0) {
-        throw UserInputException("Sigma value should be greater than 0");
-    }
 }
 
 SeededSegmentation::~SeededSegmentation() {
@@ -26,8 +17,10 @@ Mat SeededSegmentation::applyThresholding(
     return thresholdedImage;
 }
 
-SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
+SparseMatrix<double> SeededSegmentation::calculateLaplacian(
+    const Mat& inputImage, const double& beta, const double& sigma) {
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
+    const unsigned int pixelsInWindow = 9;
     const unsigned int neighborhoodSize = 8;
     const int dy[neighborhoodSize] = {-1, -1, -1, 0, 0, 1, 1, 1};
     const int dx[neighborhoodSize] = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -35,8 +28,8 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
 
     SparseMatrix<double> w(numberOfPixels, numberOfPixels);
     SparseMatrix<double> d(numberOfPixels, numberOfPixels);
-    d.reserve(VectorXd::Constant(numberOfPixels, 1));
-    w.reserve(VectorXd::Constant(numberOfPixels, 8));
+    d.reserve(VectorXd::Constant(numberOfPixels, pixelsInWindow - neighborhoodSize));
+    w.reserve(VectorXd::Constant(numberOfPixels, neighborhoodSize));
 
     for (int i = 0; i < inputImage.rows; i++) {
         for (int j = 0; j < inputImage.cols; j++) {
@@ -66,11 +59,25 @@ SparseMatrix<double> SeededSegmentation::calculateLaplacian() {
 }
 
 Mat SeededSegmentation::segment(
-    const Mat& backgroundImage, const Mat& foregroundImage) {
+    const Mat& inputImage,
+    const Mat& backgroundImage,
+    const Mat& foregroundImage,
+    const double& beta,
+    const double& sigma) {
+    if (beta < 0) {
+        throw UserInputException("Beta value should be positive");
+    }
+
+    if (sigma <= 0) {
+        throw UserInputException("Sigma value should be greater than 0");
+    }
+
+    const unsigned int pixelsInWindow = 9;
+    const unsigned int neighborhoodSize = 8;
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
 
     SparseMatrix<double> Is(numberOfPixels, numberOfPixels);
-    Is.reserve(VectorXd::Constant(numberOfPixels, 1));
+    Is.reserve(VectorXd::Constant(numberOfPixels, pixelsInWindow - neighborhoodSize));
     VectorXd b(numberOfPixels);
 
     for (unsigned int i = 0; i < numberOfPixels; i++) {
@@ -78,10 +85,17 @@ Mat SeededSegmentation::segment(
         b[i] = backgroundImage.at<bool>(i) - foregroundImage.at<bool>(i);
     }
 
-    SparseMatrix<double> laplacian = calculateLaplacian();
+    SparseMatrix<double> laplacian = calculateLaplacian(inputImage, beta, sigma);
 
+    VectorXd x = solveSystem(Is + laplacian * laplacian, b);
+
+    return interpretSolution(x, inputImage.rows, inputImage.cols);
+}
+
+VectorXd SeededSegmentation::solveSystem(
+    const SparseMatrix<double>& A, const VectorXd& b) {
     Eigen::SimplicialLLT < SparseMatrix<double> > solver;
-    solver.compute(Is + laplacian * laplacian);
+    solver.compute(A);
 
     if(solver.info() != Eigen::Success) {
         throw MathException("Decomposition failed");
@@ -93,13 +107,18 @@ Mat SeededSegmentation::segment(
         throw MathException("Solving failed");
     }
 
+    return x;
+}
+
+Mat SeededSegmentation::interpretSolution(
+    const VectorXd& x, const unsigned int& rows, const unsigned int& cols) {
     const double backgroundValue = 1;
     const double foregroundValue = -1;
     const double threshold = (backgroundValue + foregroundValue) / 2;
 
-    Mat final = Mat::zeros(inputImage.rows, inputImage.cols, CV_32FC1);
-    for (unsigned int i = 0; i < numberOfPixels; i++) {
-        final.at<float>(i) = x(i);
+    Mat final = Mat::zeros(rows, cols, CV_32FC3);
+    for (unsigned int i = 0; i < x.size(); i++) {
+        final.at<Vec3f>(i) = cv::Point3f(x(i), x(i), x(i));
     }
 
     return applyThresholding(final, threshold);
