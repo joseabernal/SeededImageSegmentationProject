@@ -1,17 +1,21 @@
 #ifndef SEEDED_SEGMENTATION_H
 #define SEEDED_SEGMENTATION_H
 
+#include <utility>
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include <Eigen/Sparse>
 
+#include "Common/neighbourhood.h"
 #include "Exceptions/mathexception.h"
 #include "Exceptions/userinputexception.h"
 
-using namespace cv;
 using Eigen::SparseMatrix;
 using Eigen::VectorXd;
+using namespace cv;
+using std::pair;
 
 /**
  * This class segment a given input image using the laplacian seeded segmentation
@@ -80,11 +84,15 @@ class SeededSegmentation
          * @param beta corresponds to a tuning constant weighting the neighborhood
          * @param sigma corresponds to the maximum value among the all diferences.
          *     A different value can be received but it should be positive.
+         * @param neighbourhood neighbourhood to use to calculate the laplacian matrix.
          *
          * @return a sparse matrix representing the laplacian
          */
         SparseMatrix<double> calculateLaplacian(
-            const Mat& inputImage, const double& beta, const double& sigma);
+            const Mat& inputImage,
+            const double& beta,
+            const double& sigma,
+            const Neighbourhood& neighbourhood);
 
     protected:
 
