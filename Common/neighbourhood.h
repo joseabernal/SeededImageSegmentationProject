@@ -11,7 +11,9 @@ using std::vector;
 using cv::Point2i;
 
 /**
- * This class represents a neighbourhood of size rows x cols.
+ * This class represents a neighbourhood of size rows x cols. The pixels in
+ * the neighbourhood are by default inactive. Thus, the pixels to consider in the
+ * neighbourhood should be set to active.
  *
  * @author Jose Bernal
  */
@@ -20,31 +22,19 @@ class Neighbourhood
     private:
         /**
          * Vector of points containing the neighbour positions. 
-         * In the case of a 3 x 3 neighbourhood, the expected positions are:
+         * In the case of a 8-neighbourhood, the expected positions are:
          * (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)
          */
         vector< Point2i > neighbourPositions;
-
-        /**
-         * Computes the neighbourhood. The given parameters should be even and
-         * greater than 1. 
-         *
-         * @param rows number of rows of the neighbourhood
-         * @param cols number of columns of the neighbourhood
-         */
-        void computeNeighbourhood(
-            const unsigned int& rows, const unsigned int& cols);
 
     public:
 
         /**
          * Default constructor
          * 
-         * @param rows number of rows of the neighbourhood
-         * @param cols number of columns of the neighbourhood
+         * @param neighbourPositions neighbour positions to take into account.
          */
-        Neighbourhood(
-            const unsigned int& rows, const unsigned int& cols);
+        Neighbourhood(const vector< Point2i >& neighbourPositions);
 
         /**
          * Class destructor

@@ -77,7 +77,10 @@ Mat SeededSegmentation::segment(
         throw UserInputException("Sigma value should be greater than 0");
     }
 
-    const Neighbourhood neighbourhood(3, 3);
+    Neighbourhood neighbourhood = 
+        NeighbourhoodFactory::createNeighbourhood(
+            NeighbourhoodFactory::N4);
+    
     const unsigned int pixelsInWindow = neighbourhood.size() + 1;
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
 

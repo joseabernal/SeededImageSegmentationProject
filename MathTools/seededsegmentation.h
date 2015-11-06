@@ -7,6 +7,7 @@
 #include <Eigen/Sparse>
 
 #include "Common/neighbourhood.h"
+#include "Common/neighbourhoodfactory.h"
 #include "Exceptions/mathexception.h"
 #include "Exceptions/userinputexception.h"
 
