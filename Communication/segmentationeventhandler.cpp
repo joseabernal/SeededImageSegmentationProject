@@ -25,7 +25,7 @@ Mat SegmentationEventHandler::QImage2Mat(const QImage& src) {
 
 QImage SegmentationEventHandler::Mat2QImage(const Mat& src)
 {
-    QImage dest(src.rows, src.cols, QImage::Format_RGB32);
+    QImage dest(src.cols, src.rows, QImage::Format_RGB32);
     
     for (unsigned int i = 0; i < src.rows; i++) {
         for (unsigned int j = 0; j < src.cols; j++) {
