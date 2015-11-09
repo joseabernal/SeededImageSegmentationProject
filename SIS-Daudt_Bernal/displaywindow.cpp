@@ -15,6 +15,8 @@ DisplayWindow::DisplayWindow()
     setWindowTitle(tr("QT Image demo with OpenCV"));
     resize(480, 240);
 
+    seedColor = qRgb(0,0,0);
+
 //    _menu = new QMenu("File");
 //    _menu->addAction("Op3n", this, SLOT(_open()));
 //    _menu->addSeparator();
@@ -110,11 +112,15 @@ void DisplayWindow::mouseMoveEvent(QMouseEvent *event)
 
     int x = pos.x();
     int y = pos.y();
+    int w = _image->width();
+    int h = _image->height();
 
-    for(int i=-3;i<4;i++)
-        for(int j=-3;j<4;j++)
-            if(x+i>=0 && x+i<_image->width() && y+j>=0 && y+j<_image->height())
-                _image->setPixel(QPoint(x+i,y+j),qRgb(0,0,0));
+    for(int i=-5;i<=5;i++)
+        for(int j=-5;j<=5;j++)
+            if(x+i>=0 && x+i<w && y+j>=0 && y+j<h)
+                _image->setPixel(QPoint(x+i,y+j),seedColor);
+
+    (*parent).paintSeed(x,y,w,h);
 
     update();
 
@@ -138,3 +144,15 @@ void DisplayWindow::mouseMoveEvent(QMouseEvent *event)
 //{
 //    emit closed();
 //}
+
+void DisplayWindow::setSeedColor(QRgb newColor)
+{
+    seedColor = newColor;
+    return;
+}
+
+void DisplayWindow::setParent(MainWindow* p)
+{
+    parent = p;
+    return;
+}
