@@ -1,10 +1,22 @@
 #include "segmentationeventhandler.h"
 
 SegmentationEventHandler::SegmentationEventHandler() {
+    segmentationThread = new SegmentationThread();
+
+    qRegisterMetaType< cv::Mat >("Mat");
+    connect(
+        segmentationThread,
+        SIGNAL(sendImage(const Mat&)),
+        this,
+        SLOT(handleResult(const Mat&)));
 }
 
 SegmentationEventHandler::~SegmentationEventHandler() {
+    if (segmentationThread->isRunning()) {
+        segmentationThread->terminate();        
+    }
 
+    delete segmentationThread;
 }
 
 Mat SegmentationEventHandler::QImage2Mat(const QImage& src) {
@@ -45,7 +57,7 @@ QImage SegmentationEventHandler::loadImage(const string& filePath) {
     return dest;
 }
 
-QImage SegmentationEventHandler::segment(
+void SegmentationEventHandler::segment(
     const QImage& img,
     const Mat& backgroundImage,
     const Mat& foregroundImage,
@@ -53,8 +65,13 @@ QImage SegmentationEventHandler::segment(
     Mat inputImage = QImage2Mat(img);
     normalize(inputImage, inputImage, 0.0, 1.0, NORM_MINMAX, CV_32FC3);
 
-    return Mat2QImage(
-        segmenter.segment(inputImage, backgroundImage, foregroundImage, beta));
+    Neighbourhood neighbourhood = 
+        NeighbourhoodFactory::createNeighbourhood(
+            NeighbourhoodFactory::N8);
+
+    segmentationThread->processImage(
+        inputImage, backgroundImage, foregroundImage, neighbourhood, beta);
+    segmentationThread->start();
 }
 
 bool SegmentationEventHandler::saveImage(
@@ -63,4 +80,8 @@ bool SegmentationEventHandler::saveImage(
     image.save(filePath.c_str());
 
     return true;
+}
+
+void SegmentationEventHandler::handleResult(const Mat& finalImage) {
+    emit sendImage(Mat2QImage(finalImage));
 }

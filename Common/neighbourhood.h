@@ -31,6 +31,11 @@ class Neighbourhood
 
         /**
          * Default constructor
+         */
+        Neighbourhood();
+
+        /**
+         * Parametrized constructor
          * 
          * @param neighbourPositions neighbour positions to take into account.
          */

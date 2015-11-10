@@ -67,6 +67,7 @@ Mat SeededSegmentation::segment(
     const Mat& inputImage,
     const Mat& backgroundImage,
     const Mat& foregroundImage,
+    const Neighbourhood& neighbourhood,
     const double& beta,
     const double& sigma) {
     if (beta < 0) {
@@ -76,10 +77,6 @@ Mat SeededSegmentation::segment(
     if (sigma <= 0) {
         throw UserInputException("Sigma value should be greater than 0");
     }
-
-    Neighbourhood neighbourhood = 
-        NeighbourhoodFactory::createNeighbourhood(
-            NeighbourhoodFactory::N4);
     
     const unsigned int pixelsInWindow = neighbourhood.size() + 1;
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;

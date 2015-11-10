@@ -118,6 +118,7 @@ class SeededSegmentation
          * @param foregroundImage Matrix Mat containing the foreground image.
          *         This matrix should contain 0 if the pixel belongs to the
          *        foreground and 1 otherwise.
+         * @param neighbourhood neighbourhood to use to calculate the laplacian matrix.
          * @param beta corresponds to a tuning constant weighting the neighborhood
          * @param sigma corresponds to the maximum value among the all diferences.
          *         A different value can be received but it should be positive.
@@ -130,6 +131,7 @@ class SeededSegmentation
             const Mat& inputImage,
             const Mat& backgroundImage,
             const Mat& foregroundImage,
+            const Neighbourhood& neighbourhood,
             const double& beta,
             const double& sigma = 0.1);
 };

@@ -1,5 +1,9 @@
 #include "neighbourhood.h"
 
+Neighbourhood::Neighbourhood() {
+
+}
+
 Neighbourhood::Neighbourhood(const vector< Point2i >& neighbourPositionsIn) {
     neighbourPositions = neighbourPositionsIn;
 }

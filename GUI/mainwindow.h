@@ -15,41 +15,46 @@
 class DisplayWindow;
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void paintSeed(const unsigned int i, const unsigned int j);
+    private:
+        DisplayWindow disp;
+        DisplayWindow dispResult;
+
+        SegmentationEventHandler* comm;
+
+        QImage inputImage;
+        QImage result;
+
+        cv::Mat seed0;
+        cv::Mat seed1;
+                
+        unsigned int currentSeed;
+
+        Ui::MainWindow *ui;
+
+    public:
+        explicit MainWindow(QWidget *parent = 0);
+        ~MainWindow();
+        
+        void paintSeed(const unsigned int i, const unsigned int j);
 
 
-private slots:
-    void on_pushButtonOpenImage_clicked();
+    private slots:
+        void handleResult(const QImage& image);
 
-    void on_pushButtonSeed1_clicked();
+        void on_pushButtonOpenImage_clicked();
 
-    void on_pushButtonSeed2_clicked();
+        void on_pushButtonSeed1_clicked();
 
-    void on_pushButtonSegmentImage_clicked();
+        void on_pushButtonSeed2_clicked();
 
-private:
-    DisplayWindow disp;
-    DisplayWindow dispResult;
-    SegmentationEventHandler comm;
-
-    QImage inputImage;
-    cv::Mat seed0;
-    cv::Mat seed1;
-    QImage result;
-    
-    int currentSeed;
-
-    Ui::MainWindow *ui;
+        void on_pushButtonSegmentImage_clicked();
 };
 
 #endif // MAINWINDOW_H
