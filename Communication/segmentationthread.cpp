@@ -12,7 +12,7 @@ void SegmentationThread::processImage(
     const Mat& backgroundImageIn,
     const Mat& foregroundImageIn,
     const Neighbourhood& neighbourhoodIn,
-    const double& betaIn) {
+    const double betaIn) {
     inputImage = inputImageIn;
     backgroundImage = backgroundImageIn;
     foregroundImage = foregroundImageIn;

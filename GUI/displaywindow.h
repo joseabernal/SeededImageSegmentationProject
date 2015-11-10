@@ -1,21 +1,19 @@
 #ifndef DISPLAYWINDOW_H
 #define DISPLAYWINDOW_H
 
+#include <QImage>
+#include <QKeyEvent>
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
-#include <QImage>
-#include <QKeyEvent>
 #include <QPainter>
 
 #include <opencv/highgui.h>
 
-//#include "mainwindow.h"
-
-class MainWindow;
+#include <cv.h>
 
 /**
- *
+ * Class in charge of displaying the images on a window.
  *
  * @see Karl Phillip, https://github.com/karlphillip/GraphicsProgramming
  *
@@ -25,32 +23,62 @@ class DisplayWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    DisplayWindow();
-    ~DisplayWindow();
+    private:
+        /**
+         * Displayed image
+         */
+        QImage image;
+        
+        /**
+         * Color of the seed.
+         */
+        QRgb seedColor;
 
-    void setParent(MainWindow*);
-    void displayImage(const QImage&);
-    void paintEvent(QPaintEvent* e);
-//    void keyPressEvent(QKeyEvent* event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void setSeedColor(QRgb);
 
-private:
-    MainWindow* parent;
-    
-    QImage _image;
-    
-    QRgb seedColor;
+    public:
+        /**
+         * Default constructor.
+         */
+        DisplayWindow();
 
-//private slots:
-//    void _open();
+        /**
+         * Class destructor.
+         */
+        ~DisplayWindow();
 
-//protected:
-//    void _close();
+        /**
+         * Displays the given QImage.
+         *
+         * @param image image to be displayed.
+         */
+        void displayImage(const QImage& image);
 
-//signals:
-//    void closed();
+        /**
+         * Sets the color of the seed.
+         *
+         * @param seedColor seed color to use.
+         */
+        void setSeedColor(const QRgb seedColor);
+
+        /**
+         * Handles the paint events
+         *
+         * @param event event triggered
+         */
+        void paintEvent(QPaintEvent* event);
+
+        /**
+         * Handles the mouse move events
+         *
+         * @param event event triggered
+         */
+        void mouseMoveEvent(QMouseEvent *event);
+
+    signals:
+        /**
+         * Signal emitted when a drawing the seeds.
+         */
+        void updatePixel(const unsigned int i, const unsigned int j);
 };
 
-#endif // DISPLAYWINDOW_H
+#endif

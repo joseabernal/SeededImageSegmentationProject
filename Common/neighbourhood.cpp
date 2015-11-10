@@ -10,7 +10,7 @@ Neighbourhood::Neighbourhood(const vector< Point2i >& neighbourPositionsIn) {
 
 Neighbourhood::~Neighbourhood() { }
 
-Point2i Neighbourhood::operator() (const unsigned int& idx) const {
+Point2i Neighbourhood::operator() (const unsigned int idx) const {
     if (idx >= neighbourPositions.size()) {
         throw UserInputException("Trying to access to an invalid position");
     }

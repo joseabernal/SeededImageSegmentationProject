@@ -54,7 +54,7 @@ class Neighbourhood
          *
          * @return the position of the idx-th neighbour
          */
-        Point2i operator() (const unsigned int& idx) const;
+        Point2i operator() (const unsigned int idx) const;
 
         /**
          * Returns the size of the neighbourhood. If the neighbourhood is 3x3, 

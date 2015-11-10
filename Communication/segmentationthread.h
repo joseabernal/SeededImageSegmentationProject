@@ -85,7 +85,7 @@ class SegmentationThread : public QThread {
             const Mat& backgroundImage,
             const Mat& foregroundImage,
             const Neighbourhood& neighbourhood,
-            const double& beta);
+            const double beta);
 
     signals:
 

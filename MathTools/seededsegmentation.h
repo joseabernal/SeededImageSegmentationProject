@@ -50,7 +50,7 @@ class SeededSegmentation
          *
          * @return a binary image in which 0 represents foreground and 1 background.
          */
-        Mat applyThresholding(const Mat& image, const double& threshold);
+        Mat applyThresholding(const Mat& image, const double threshold);
 
         /**
          * Transforms the vector x from the system Ax = b into a image containing
@@ -63,7 +63,7 @@ class SeededSegmentation
          * @return a binary image in which 0 represents foreground and 1 background.
          */
         Mat interpretSolution(
-            const VectorXd& x, const unsigned int& rows, const unsigned int& cols);
+            const VectorXd& x, const unsigned int rows, const unsigned int cols);
 
         /**
          * Solves the system Ax = b. 
@@ -88,8 +88,8 @@ class SeededSegmentation
          */
         SparseMatrix<double> calculateLaplacian(
             const Mat& inputImage,
-            const double& beta,
-            const double& sigma,
+            const double beta,
+            const double sigma,
             const Neighbourhood& neighbourhood);
 
     protected:
@@ -132,8 +132,8 @@ class SeededSegmentation
             const Mat& backgroundImage,
             const Mat& foregroundImage,
             const Neighbourhood& neighbourhood,
-            const double& beta,
-            const double& sigma = 0.1);
+            const double beta,
+            const double sigma = 0.1);
 };
 
 #endif 

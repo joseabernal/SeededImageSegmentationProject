@@ -69,7 +69,7 @@ class SegmentationEventHandler : public QObject {
          *
          * @return QImage loaded image
          */
-        QImage loadImage(const string& filePath);
+        QImage loadImage(const string filePath);
 
         /**
          * Calls the seededsegmentation class with the given inputs.
@@ -83,7 +83,7 @@ class SegmentationEventHandler : public QObject {
             const QImage& image,
             const Mat& backgroundImage,
             const Mat& foregroundImage,
-            const double& beta);
+            const double beta);
         
         /**
          * Load image on filePath
@@ -93,7 +93,7 @@ class SegmentationEventHandler : public QObject {
          *
          * @return true if the process was successful
          */
-        bool saveImage(const QImage& image, const string& filePath);
+        bool saveImage(const QImage& image, const string filePath);
 
     private slots:
 

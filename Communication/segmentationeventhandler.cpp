@@ -50,7 +50,7 @@ QImage SegmentationEventHandler::Mat2QImage(const Mat& src)
     return dest;
 }
 
-QImage SegmentationEventHandler::loadImage(const string& filePath) {
+QImage SegmentationEventHandler::loadImage(const string filePath) {
     QImage dest;
     dest.load(filePath.c_str());
 
@@ -61,7 +61,7 @@ void SegmentationEventHandler::segment(
     const QImage& img,
     const Mat& backgroundImage,
     const Mat& foregroundImage,
-    const double& beta) {
+    const double beta) {
     Mat inputImage = QImage2Mat(img);
     normalize(inputImage, inputImage, 0.0, 1.0, NORM_MINMAX, CV_32FC3);
 
@@ -75,7 +75,7 @@ void SegmentationEventHandler::segment(
 }
 
 bool SegmentationEventHandler::saveImage(
-    const QImage& img, const string& filePath) {
+    const QImage& img, const string filePath) {
     QImage image = img;
     image.save(filePath.c_str());
 

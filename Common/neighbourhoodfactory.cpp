@@ -1,7 +1,7 @@
 #include "neighbourhoodfactory.h"
 
 Neighbourhood NeighbourhoodFactory::createNeighbourhood(
-    NeighbourhoodFactory::NeighbourhoodType type) {
+    const NeighbourhoodFactory::NeighbourhoodType type) {
     switch(type){
         case NeighbourhoodFactory::N4: {
             vector<Point2i> neighbourhoodPositions(4);
