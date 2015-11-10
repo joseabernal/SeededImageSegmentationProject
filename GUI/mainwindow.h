@@ -25,7 +25,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void paintSeed(int,int,int,int);
+    void paintSeed(const unsigned int i, const unsigned int j);
 
 
 private slots:
@@ -41,10 +41,12 @@ private:
     DisplayWindow disp;
     DisplayWindow dispResult;
     SegmentationEventHandler comm;
-    cv::Mat inputImage;
+
+    QImage inputImage;
     cv::Mat seed0;
     cv::Mat seed1;
-    cv::Mat result;
+    QImage result;
+    
     int currentSeed;
 
     Ui::MainWindow *ui;
