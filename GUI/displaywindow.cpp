@@ -1,6 +1,3 @@
-// Author: Rodrigo Daudt
-// Reference: Karl Phillip, https://github.com/karlphillip/GraphicsProgramming
-
 #include "displaywindow.h"
 #include "mainwindow.h"
 
@@ -9,9 +6,7 @@
 
 #include <cv.h>
 
-DisplayWindow::DisplayWindow()
-    : _image(NULL)
-{
+DisplayWindow::DisplayWindow() {
     setWindowTitle(tr("QT Image demo with OpenCV"));
     resize(480, 240);
 
@@ -26,47 +21,30 @@ DisplayWindow::DisplayWindow()
 //    setMenuBar(&_menu_bar);
 }
 
-DisplayWindow::~DisplayWindow()
-{
-    if (_image)
-        delete _image;
+DisplayWindow::~DisplayWindow() {
 }
 
-void DisplayWindow::paintEvent(QPaintEvent* e)
-{
+void DisplayWindow::paintEvent(QPaintEvent* e) {
     QPainter painter(this);
 
     // When no image has been loaded, there's nothing to draw.
-    if (!_image)
+    if (_image.isNull()) {
         return;
+    }
 
-    painter.drawImage(QPoint(0, 0), *_image);
+    painter.drawImage(QPoint(0, 0), _image);
 
     QWidget::paintEvent(e);
 }
 
-void DisplayWindow::displayImage(cv::Mat &img)
-{
-    // Since OpenCV uses BGR order, we need to convert it to RGB
-    cv::cvtColor(img, img, CV_BGR2RGB);
-
-    // _image is created according to video dimensions
-    if (_image)
-    {
-        delete _image;
-    }
-    _image = new QImage(img.size().width, img.size().height, QImage::Format_RGB888);
-
-    // Copy cv::Mat to QImage
-    memcpy(_image->scanLine(0),
-           (unsigned char*)img.data,
-           _image->width() * _image->height() * img.channels());
-
+void DisplayWindow::displayImage(const QImage &src) {
+   _image = src; 
+    
     // Set the filename as the window title
     setWindowTitle("Image to be segmented");
 
     // Resize the window to fit video dimensions
-    resize(img.size().width, img.size().height);
+    resize(src.width(), src.height());
 
     // Mouse move events will occur only when a mouse button is pressed down,
     // unless mouse tracking has been enabled:
@@ -89,18 +67,18 @@ void DisplayWindow::displayImage(cv::Mat &img)
 //    }
 //}
 
-void DisplayWindow::mouseMoveEvent(QMouseEvent *event)
-{
-    if (!_image)
+void DisplayWindow::mouseMoveEvent(QMouseEvent *event) {
+    if (_image.isNull()) {
         return;
+    }
 
     QPoint pos = event->pos();
-    if (pos.x() < 0 || pos.x() >= _image->width())
+    if (pos.x() < 0 || pos.x() >= _image.width()) {
         return;
-    if (pos.y() < 0 || pos.y() >= _image->height())
+    }
+    if (pos.y() < 0 || pos.y() >= _image.height()) {
         return;
-
-
+    }
 
 //    QString pos_x;
 //    pos_x = pos_x.setNum(pos.x());
@@ -108,19 +86,21 @@ void DisplayWindow::mouseMoveEvent(QMouseEvent *event)
 //    QString pos_y;
 //    pos_y = pos_y.setNum(pos.y());
 
-//    QColor pixel(_image->pixel(pos));
+//    QColor pixel(_image.pixel(pos));
 
     int x = pos.x();
     int y = pos.y();
-    int w = _image->width();
-    int h = _image->height();
+    int w = _image.width();
+    int h = _image.height();
 
-    for(int i=-5;i<=5;i++)
-        for(int j=-5;j<=5;j++)
-            if(x+i>=0 && x+i<w && y+j>=0 && y+j<h)
-                _image->setPixel(QPoint(x+i,y+j),seedColor);
-
-    (*parent).paintSeed(x,y,w,h);
+    for(int i = -5; i <= 5; i++) {
+        for(int j = -5; j <= 5; j++) {
+            if(x + i >= 0 && x + i < w && y + j >= 0 && y + j < h) {
+                _image.setPixel(QPoint(x + i, y + j), seedColor);
+                parent->paintSeed(y + j, x + i);
+            }
+        }
+    }
 
     update();
 

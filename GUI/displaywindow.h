@@ -14,6 +14,13 @@
 
 class MainWindow;
 
+/**
+ *
+ *
+ * @see Karl Phillip, https://github.com/karlphillip/GraphicsProgramming
+ *
+ * @author Rodrigo Daudt
+ */
 class DisplayWindow : public QMainWindow
 {
     Q_OBJECT
@@ -23,7 +30,7 @@ public:
     ~DisplayWindow();
 
     void setParent(MainWindow*);
-    void displayImage(cv::Mat &);
+    void displayImage(const QImage&);
     void paintEvent(QPaintEvent* e);
 //    void keyPressEvent(QKeyEvent* event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -31,7 +38,9 @@ public:
 
 private:
     MainWindow* parent;
-    QImage* _image;
+    
+    QImage _image;
+    
     QRgb seedColor;
 
 //private slots:
