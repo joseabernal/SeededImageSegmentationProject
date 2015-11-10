@@ -74,10 +74,10 @@ class SegmentationEventHandler {
          * @param foregroundImage foreground image to segment
          * @param beta tuning variable
          *
-         * @return QImage loaded image
+         * @return Mat loaded image
          */
-        QImage segment(
-            const QImage& image,
+        Mat segment(
+            const Mat& image,
             const Mat& backgroundImage,
             const Mat& foregroundImage,
             const double& beta);

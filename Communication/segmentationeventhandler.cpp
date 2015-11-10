@@ -44,14 +44,14 @@ QImage SegmentationEventHandler::loadImage(const string& filePath) {
     return image;
 }
 
-QImage SegmentationEventHandler::segment(
-    const QImage& img, const Mat& backgroundImage, const Mat& foregroundImage, const double& beta) {
-    Mat inputImage = QImage2Mat(img);
-
+Mat SegmentationEventHandler::segment(
+    const Mat& inputImage,
+    const Mat& backgroundImage,
+    const Mat& foregroundImage,
+    const double& beta) {
     normalize(inputImage, inputImage, 0.0, 1.0, NORM_MINMAX, CV_32FC3);
 
-    return Mat2QImage(
-        segmenter.segment(inputImage, backgroundImage, foregroundImage, beta));
+    return segmenter.segment(inputImage, backgroundImage, foregroundImage, beta);
 }
 
 bool SegmentationEventHandler::saveImage(
