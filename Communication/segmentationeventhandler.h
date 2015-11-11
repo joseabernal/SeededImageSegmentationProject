@@ -2,12 +2,16 @@
 #define SEGMENTATION_EVENT_HANDLER_H
 
 #include <QImage>
+#include <QMetaType>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include "Common/neighbourhood.h"
+#include "Common/neighbourhoodfactory.h"
 #include "MathTools/seededsegmentation.h"
+#include "segmentationthread.h"
 
 using cv::Mat;
 
@@ -16,10 +20,11 @@ using cv::Mat;
  *
  * @author Jose Bernal
  */
-class SegmentationEventHandler {
+class SegmentationEventHandler : public QObject {
+    Q_OBJECT
 
     private:
-        SeededSegmentation segmenter;
+        SegmentationThread* segmentationThread;
 
         /**
          * Converts a QImage object to cv::Mat
@@ -64,7 +69,7 @@ class SegmentationEventHandler {
          *
          * @return QImage loaded image
          */
-        QImage loadImage(const string& filePath);
+        QImage loadImage(const string filePath);
 
         /**
          * Calls the seededsegmentation class with the given inputs.
@@ -73,14 +78,12 @@ class SegmentationEventHandler {
          * @param backgroundImage background image to segment
          * @param foregroundImage foreground image to segment
          * @param beta tuning variable
-         *
-         * @return QImage loaded image
          */
-        QImage segment(
+        void segment(
             const QImage& image,
             const Mat& backgroundImage,
             const Mat& foregroundImage,
-            const double& beta);
+            const double beta);
         
         /**
          * Load image on filePath
@@ -90,7 +93,21 @@ class SegmentationEventHandler {
          *
          * @return true if the process was successful
          */
-        bool saveImage(const QImage& image, const string& filePath);
+        bool saveImage(const QImage& image, const string filePath);
+
+    private slots:
+
+        /**
+         * Slot handling the result after segmentation.
+         */
+        void handleResult(const Mat& finalImage);
+
+    signals:
+
+        /**
+         * Signal emitted when the result after segmentation is obtained.
+         */
+        void sendImage(const QImage& finalImage);
 };
 
 #endif

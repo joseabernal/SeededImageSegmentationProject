@@ -50,7 +50,7 @@ class SeededSegmentation
          *
          * @return a binary image in which 0 represents foreground and 1 background.
          */
-        Mat applyThresholding(const Mat& image, const double& threshold);
+        Mat applyThresholding(const Mat& image, const double threshold);
 
         /**
          * Transforms the vector x from the system Ax = b into a image containing
@@ -63,7 +63,7 @@ class SeededSegmentation
          * @return a binary image in which 0 represents foreground and 1 background.
          */
         Mat interpretSolution(
-            const VectorXd& x, const unsigned int& rows, const unsigned int& cols);
+            const VectorXd& x, const unsigned int rows, const unsigned int cols);
 
         /**
          * Solves the system Ax = b. 
@@ -88,8 +88,8 @@ class SeededSegmentation
          */
         SparseMatrix<double> calculateLaplacian(
             const Mat& inputImage,
-            const double& beta,
-            const double& sigma,
+            const double beta,
+            const double sigma,
             const Neighbourhood& neighbourhood);
 
     protected:
@@ -118,6 +118,7 @@ class SeededSegmentation
          * @param foregroundImage Matrix Mat containing the foreground image.
          *         This matrix should contain 0 if the pixel belongs to the
          *        foreground and 1 otherwise.
+         * @param neighbourhood neighbourhood to use to calculate the laplacian matrix.
          * @param beta corresponds to a tuning constant weighting the neighborhood
          * @param sigma corresponds to the maximum value among the all diferences.
          *         A different value can be received but it should be positive.
@@ -130,8 +131,9 @@ class SeededSegmentation
             const Mat& inputImage,
             const Mat& backgroundImage,
             const Mat& foregroundImage,
-            const double& beta,
-            const double& sigma = 0.1);
+            const Neighbourhood& neighbourhood,
+            const double beta,
+            const double sigma = 0.1);
 };
 
 #endif 

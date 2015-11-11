@@ -9,7 +9,7 @@ SeededSegmentation::~SeededSegmentation() {
 }
 
 Mat SeededSegmentation::applyThresholding(
-    const Mat& image, const double& thresholdValue) {
+    const Mat& image, const double thresholdValue) {
     Mat thresholdedImage;
 
     threshold(
@@ -20,8 +20,8 @@ Mat SeededSegmentation::applyThresholding(
 
 SparseMatrix<double> SeededSegmentation::calculateLaplacian(
     const Mat& inputImage,
-    const double& beta,
-    const double& sigma,
+    const double beta,
+    const double sigma,
     const Neighbourhood& neighbourhood) {
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
     const unsigned int pixelsInWindow = neighbourhood.size() + 1;
@@ -67,8 +67,9 @@ Mat SeededSegmentation::segment(
     const Mat& inputImage,
     const Mat& backgroundImage,
     const Mat& foregroundImage,
-    const double& beta,
-    const double& sigma) {
+    const Neighbourhood& neighbourhood,
+    const double beta,
+    const double sigma) {
     if (beta < 0) {
         throw UserInputException("Beta value should be positive");
     }
@@ -76,10 +77,6 @@ Mat SeededSegmentation::segment(
     if (sigma <= 0) {
         throw UserInputException("Sigma value should be greater than 0");
     }
-
-    Neighbourhood neighbourhood = 
-        NeighbourhoodFactory::createNeighbourhood(
-            NeighbourhoodFactory::N4);
     
     const unsigned int pixelsInWindow = neighbourhood.size() + 1;
     const unsigned int numberOfPixels = inputImage.cols * inputImage.rows;
@@ -122,7 +119,7 @@ VectorXd SeededSegmentation::solveSystem(
 }
 
 Mat SeededSegmentation::interpretSolution(
-    const VectorXd& x, const unsigned int& rows, const unsigned int& cols) {
+    const VectorXd& x, const unsigned int rows, const unsigned int cols) {
     const double backgroundValue = 1;
     const double foregroundValue = -1;
     const double threshold = (backgroundValue + foregroundValue) / 2;

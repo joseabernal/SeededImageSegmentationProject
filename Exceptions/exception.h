@@ -34,7 +34,7 @@ class Exception : public std::exception
          * @param name Name of the exception
          * @param message Message to display
          */
-        Exception(const string& name, const string& message);
+        Exception(const string name, const string message);
 
         /**
          * Default destructor

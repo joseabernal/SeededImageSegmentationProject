@@ -29,7 +29,7 @@ class NeighbourhoodFactory {
          * 
          * @return a Neighbourhood instance of the given type
          */
-        static Neighbourhood createNeighbourhood(NeighbourhoodType type);
+        static Neighbourhood createNeighbourhood(const NeighbourhoodType type);
 };
 
 #endif

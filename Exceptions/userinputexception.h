@@ -22,7 +22,7 @@ class UserInputException : public Exception
          *
          * @param message Message to display
          */
-        UserInputException(const string& message);
+        UserInputException(const string message);
 };
 
 #endif

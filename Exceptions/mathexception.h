@@ -21,7 +21,7 @@ class MathException : public Exception
          *
          * @param message Message to display
          */
-        MathException(const string& message);
+        MathException(const string message);
 };
 
 #endif
