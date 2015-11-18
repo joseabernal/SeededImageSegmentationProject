@@ -8,6 +8,7 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #include "displaywindow.h"
+#include "seedinputwindow.h"
 #include "ui_mainwindow.h"
 #include "Communication/segmentationeventhandler.h"
 
@@ -33,12 +34,13 @@ class MainWindow : public QMainWindow {
         /**
          * DisplayWindow instance aiming to display the input image and seeds.
          */
-        DisplayWindow* disp;
+        SeedInputWindow* inp;
 
         /**
-         * DisplayWindow instance aiming to display the output image.
+         * DisplayWindow instance aiming to display the input image and seeds.
          */
-        DisplayWindow dispResult;
+        DisplayWindow* disp;
+
 
         /**
          * Event handler of segmentation-related tasks.

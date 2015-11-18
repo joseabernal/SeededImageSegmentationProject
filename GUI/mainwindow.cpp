@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     seed1 = cv::Mat::zeros(256, 256, CV_8UC1);
 
     comm = new SegmentationEventHandler();
+    inp = new SeedInputWindow();
     disp = new DisplayWindow();
 
     connect(
@@ -18,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
         SLOT(handleResult(const QImage&)));
 
     connect(
-        disp,
+        inp,
         SIGNAL(updatePixel(const unsigned int, const unsigned int)),
         this,
         SLOT(handleUpdatePixel(const unsigned int, const unsigned int)));
@@ -28,7 +29,9 @@ MainWindow::~MainWindow() {
     delete ui;
     delete comm;
     delete disp;
+    delete inp;
     comm = 0;
+    inp = 0;
     disp = 0;
 }
 
@@ -53,9 +56,9 @@ void MainWindow::on_pushButtonOpenImage_clicked() {
     seed0 = cv::Mat::zeros(inputImage.height(), inputImage.width(), CV_8UC1);
     seed1 = cv::Mat::zeros(inputImage.height(), inputImage.width(), CV_8UC1);
 
-    disp->show();
-    disp->move(100, 100);
-    disp->displayImage(inputImage);
+    inp->show();
+    inp->move(100, 100);
+    inp->displayImage(inputImage);
 }
 
 void MainWindow::handleUpdatePixel(const unsigned int i, const unsigned int j) {
@@ -69,19 +72,19 @@ void MainWindow::handleUpdatePixel(const unsigned int i, const unsigned int j) {
 
 void MainWindow::handleResult(const QImage& image) {
     result = image;
-    dispResult.show();
-    dispResult.move(100, 100);
-    dispResult.displayImage(result);
+    disp->show();
+    disp->move(100, 100);
+    disp->displayImage(result);
 }
 
 void MainWindow::on_pushButtonSeed1_clicked() {
     currentSeed = 0;
-    disp->setSeedColor(qRgb(0, 0, 0));
+    inp->setSeedColor(qRgb(0, 0, 0));
 }
 
 void MainWindow::on_pushButtonSeed2_clicked() {
     currentSeed = 1;
-    disp->setSeedColor(qRgb(255, 255, 255));
+    inp->setSeedColor(qRgb(255, 255, 255));
 }
 
 void MainWindow::on_pushButtonSegmentImage_clicked() {
