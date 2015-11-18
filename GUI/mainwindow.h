@@ -58,6 +58,11 @@ class MainWindow : public QMainWindow {
         QImage result;
 
         /**
+         * The original image with segmentation contours
+         */
+        QImage contourImage;
+
+        /**
          * Matrix of the seeds of foreground
          */
         cv::Mat seed0;
