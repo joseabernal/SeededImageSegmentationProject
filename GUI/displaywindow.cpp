@@ -13,7 +13,7 @@ void DisplayWindow::paintEvent(QPaintEvent* e) {
 
     // When no image has been loaded, there's nothing to draw.
     if (image.isNull()) {
-        return;
+        throw UserInputException("Empty image cannot be displayed");
     }
 
     painter.drawImage(QPoint(0, 0), image);

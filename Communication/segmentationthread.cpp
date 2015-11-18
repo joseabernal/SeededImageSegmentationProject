@@ -21,6 +21,30 @@ void SegmentationThread::processImage(
 }
 
 void SegmentationThread::run() {
-    emit sendImage(segmenter.segment(
-        inputImage, backgroundImage, foregroundImage, neighbourhood, beta));
+    Mat segmentedImage;
+    bool sucessful = true;
+    try {
+        segmentedImage = segmenter.segment(
+            SegmentationUtility::normalizedImage(inputImage),
+            backgroundImage,
+            foregroundImage,
+            neighbourhood,
+            beta);
+    }
+    catch(std::exception& e) {
+        qDebug() << "Error detected in the process. "
+            << e.what()
+            << ". "
+            << "Sending empty image" << endl;
+
+        sucessful = false;
+    }
+
+    if (sucessful) {
+        emit sendImage(
+            SegmentationUtility::obtainImageWithBoundary(inputImage, segmentedImage));
+    }
+    else {
+        emit sendImage(segmentedImage);   
+    }
 }

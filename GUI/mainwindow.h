@@ -10,6 +10,7 @@
 #include "displaywindow.h"
 #include "seedinputwindow.h"
 #include "ui_mainwindow.h"
+#include "Exceptions/userinputexception.h"
 #include "Communication/segmentationeventhandler.h"
 
 namespace Ui {

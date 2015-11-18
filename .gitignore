@@ -1,3 +1,5 @@
 SeededImageSegmentationProject
 *.o
 ~*.*
+moc_*
+*.png

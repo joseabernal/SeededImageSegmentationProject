@@ -1,6 +1,8 @@
 #ifndef SEEDED_SEGMENTATION_H
 #define SEEDED_SEGMENTATION_H
 
+#include <iostream>
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -30,7 +32,7 @@ class SeededSegmentation
         /**
          * Max binary value constant to use in the thresholding method.
          */
-        static const unsigned int MAX_BINARY_VALUE = 255;
+        static const unsigned int MAX_BINARY_VALUE = 1;
 
         /**
          * Threshold type to use in the thresholding method.

@@ -1,11 +1,18 @@
 #ifndef SEGMENTATION_THREAD_H
 #define SEGMENTATION_THREAD_H
 
+#include <exception>
+
+#include <QDebug>
 #include <QThread>
 
 #include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 #include "Common/neighbourhood.h"
+#include "Common/segmentationutility.h"
+#include "Exceptions/mathexception.h"
+#include "Exceptions/userinputexception.h"
 #include "MathTools/seededsegmentation.h"
 
 using cv::Mat;
