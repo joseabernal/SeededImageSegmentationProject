@@ -95,7 +95,7 @@ Mat SeededSegmentation::segment(
     SparseMatrix<double> laplacian =
         calculateLaplacian(inputImage, beta, sigma, neighbourhood);
 
-    VectorXd x = solveSystem(Is + laplacian/* * laplacian*/, b);
+    VectorXd x = solveSystem(Is + laplacian * laplacian, b);
 
     return interpretSolution(x, inputImage.rows, inputImage.cols);
 }
