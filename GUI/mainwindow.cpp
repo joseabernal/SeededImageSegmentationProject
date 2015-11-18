@@ -72,44 +72,42 @@ void MainWindow::handleUpdatePixel(const unsigned int i, const unsigned int j) {
 
 void MainWindow::handleResult(const QImage& image) {
     result = image;
-        contourImage = inputImage;
-        int kn = 3; //Kernel size = 2*kn+1
-        int w = contourImage.width();
-        int h = contourImage.height();
-        bool seed0present = false;
-        bool seed1present = false;
-        QRgb contourColor = qRgb(255,0,0);
+    contourImage = inputImage;
+    int kn = 3; //Kernel size = 2*kn+1
+    int w = contourImage.width();
+    int h = contourImage.height();
+    bool seed0present = false;
+    bool seed1present = false;
+    QRgb contourColor = qRgb(255,0,0);
 
-        // Draw contours
-        for(int i=0;i<w;i++)
-        {
-            for(int j=0;j<h;j++)
-            {
-                for(int di=-kn;di<=kn;di++)
-                {
-                    for(int dj=-kn;dj<=kn;dj++)
-                    {
-                        if(i+di>=0 && i+di<w && j+dj>=0 && j+dj<h)
-                        {
-                            if(qGray(result.pixel(i+di,j+dj))==0)
-                                seed0present = true;
-                            else
-                                seed1present = true;
+    // Draw contours
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            for(int di = -kn; di <= kn; di++) {
+                for (int dj = -kn; dj <= kn; dj++) {
+                    if (i + di >= 0 && i + di < w && j + dj >= 0 && j + dj < h) {
+                        if(qGray(result.pixel(i + di, j + dj)) == 0) {
+                            seed0present = true;
+                        }
+                        else {
+                            seed1present = true;
                         }
                     }
                 }
-
-                if(seed0present && seed1present)
-                    contourImage.setPixel(i,j, contourColor);
-
-                seed0present = false;
-                seed1present = false;
             }
-        }
 
-        disp->show();
-        disp->move(100, 100);
-        disp->displayImage(contourImage);
+            if (seed0present && seed1present) {
+                contourImage.setPixel(i,j, contourColor);
+            }
+
+            seed0present = false;
+            seed1present = false;
+        }
+    }
+
+    disp->show();
+    disp->move(100, 100);
+    disp->displayImage(contourImage);
 }
 
 void MainWindow::on_pushButtonSeed1_clicked() {
