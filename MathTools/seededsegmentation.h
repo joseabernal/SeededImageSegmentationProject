@@ -1,8 +1,6 @@
 #ifndef SEEDED_SEGMENTATION_H
 #define SEEDED_SEGMENTATION_H
 
-#include <iostream>
-
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
