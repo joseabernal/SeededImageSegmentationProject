@@ -9,7 +9,7 @@ using cv::Mat;
 /**
  * This class present a set of utilities for polishing the segmentation result.
  *
- * @author Jose Bernal
+ * @author Rodrigo Daudt
  */
 class SegmentationUtility
 {
