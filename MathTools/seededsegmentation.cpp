@@ -102,6 +102,7 @@ Mat SeededSegmentation::segment(
 
 VectorXd SeededSegmentation::solveSystem(
     const SparseMatrix<double>& A, const VectorXd& b) {
+    
     Eigen::SimplicialLLT < SparseMatrix<double> > solver;
     solver.compute(A);
 

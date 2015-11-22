@@ -8,9 +8,11 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include "Common/imagetypeconverter.h"
 #include "Common/neighbourhood.h"
 #include "Common/neighbourhoodfactory.h"
 #include "MathTools/seededsegmentation.h"
+
 #include "segmentationthread.h"
 
 using cv::Mat;
@@ -25,28 +27,6 @@ class SegmentationEventHandler : public QObject {
 
     private:
         SegmentationThread* segmentationThread;
-
-        /**
-         * Converts a QImage object to cv::Mat
-         *
-         * @param image QImage object to convert
-         *
-         * @return the converted cv::Mat object
-         *
-         * @see http://answers.opencv.org/question/9075/how-do-i-save-qimage-in-cvmat/
-         */
-        Mat QImage2Mat(const QImage& image);
-
-        /**
-         * Converts a cv::Mat object to QImage
-         *
-         * @param image cv::Mat object to convert
-         *
-         * @return the converted QImage object
-         *
-         * @see http://answers.opencv.org/question/9075/how-do-i-save-qimage-in-cvmat/
-         */
-        QImage Mat2QImage(const Mat& image);
 
     protected:
 

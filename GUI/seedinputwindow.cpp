@@ -2,6 +2,7 @@
 
 SeedInputWindow::SeedInputWindow() {
     setWindowTitle(tr("Seed Input Window"));
+
     resize(480, 240);
 
     seedColor = qRgb(0,0,0);
@@ -12,7 +13,7 @@ SeedInputWindow::~SeedInputWindow() {
 
 void SeedInputWindow::mouseMoveEvent(QMouseEvent *event) {
     if (image.isNull()) {
-        return;
+        throw UserInputException("Empty image cannot be displayed");
     }
 
     QPoint pos = event->pos();
