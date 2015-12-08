@@ -5,7 +5,7 @@
 
 #include <opencv2/core/core.hpp>
 
-#include "Exceptions/userinputexception.h"
+#include "src/exceptions/userinputexception.h"
 
 using std::vector;
 using cv::Point2i;

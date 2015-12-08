@@ -3,7 +3,7 @@
 
 #include "neighbourhood.h"
 
-#include "Exceptions/userinputexception.h"
+#include "src/exceptions/userinputexception.h"
 
 /**
  * This factory class is in charge of generating instances of the Neighbourhoods.

@@ -6,10 +6,10 @@
 
 #include <Eigen/Sparse>
 
-#include "Common/neighbourhood.h"
-#include "Common/neighbourhoodfactory.h"
-#include "Exceptions/mathexception.h"
-#include "Exceptions/userinputexception.h"
+#include "src/common/neighbourhood.h"
+#include "src/common/neighbourhoodfactory.h"
+#include "src/exceptions/mathexception.h"
+#include "src/exceptions/userinputexception.h"
 
 using Eigen::SparseMatrix;
 using Eigen::VectorXd;
@@ -40,7 +40,7 @@ class SeededSegmentation
         /**
          * Epsilon value to use in calculations.
          */
-        static const double EPSILON = 0.0000001;
+        const double EPSILON = 0.0000001;
 
         /**
          * Applies a certain threshold on the image.

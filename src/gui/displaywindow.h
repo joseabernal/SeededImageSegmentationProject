@@ -6,7 +6,7 @@
 #include <QMainWindow>
 #include <QPainter>
 
-#include "Exceptions/userinputexception.h"
+#include "src/exceptions/userinputexception.h"
 
 /**
  * Class in charge of displaying the images on a window.

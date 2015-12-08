@@ -9,11 +9,11 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-#include "Common/neighbourhood.h"
-#include "Common/segmentationutility.h"
-#include "Exceptions/mathexception.h"
-#include "Exceptions/userinputexception.h"
-#include "MathTools/seededsegmentation.h"
+#include "src/common/neighbourhood.h"
+#include "src/common/segmentationutility.h"
+#include "src/exceptions/mathexception.h"
+#include "src/exceptions/userinputexception.h"
+#include "src/mathtools/seededsegmentation.h"
 
 using cv::Mat;
 

@@ -8,10 +8,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#include "Common/imagetypeconverter.h"
-#include "Common/neighbourhood.h"
-#include "Common/neighbourhoodfactory.h"
-#include "MathTools/seededsegmentation.h"
+#include "src/common/imagetypeconverter.h"
+#include "src/common/neighbourhood.h"
+#include "src/common/neighbourhoodfactory.h"
+#include "src/mathtools/seededsegmentation.h"
 
 #include "segmentationthread.h"
 
