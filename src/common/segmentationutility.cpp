@@ -22,7 +22,9 @@ Mat SegmentationUtility::normalizedImage(const Mat& inputImage) {
 }
 
 Mat SegmentationUtility::obtainImageWithBoundary(
-    const Mat& inputImage, const Mat& segmentedImage) {
+    const Mat& inputImage, const Mat& segImage) {
+    Mat segmentedImage;
+    normalize(segImage, segmentedImage, 0.0, 1.0, cv::NORM_MINMAX, CV_32FC3);
     Mat boundaryImage =
         SegmentationUtility::computeBoundary(segmentedImage);
     boundaryImage = multiply(boundaryImage, cv::Scalar(255, 255, 0));

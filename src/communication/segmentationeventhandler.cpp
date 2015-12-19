@@ -42,6 +42,17 @@ void SegmentationEventHandler::segment(
     segmentationThread->start();
 }
 
+QImage SegmentationEventHandler::obtainImageWithBoundary(
+    const QImage& img, const QImage& segImg) {
+    Mat inputImage = ImageTypeConverter::convertQImage2Mat(img);
+    Mat segmentedImage = ImageTypeConverter::convertQImage2Mat(segImg);
+
+    Mat result = 
+        SegmentationUtility::obtainImageWithBoundary(inputImage, segmentedImage);
+
+    return ImageTypeConverter::convertMat2QImage(result);
+}
+
 bool SegmentationEventHandler::saveImage(
     const QImage& img, const string filePath) {
     QImage image = img;

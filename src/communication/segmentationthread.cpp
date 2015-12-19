@@ -4,7 +4,7 @@ SegmentationThread::SegmentationThread() {
 }
 
 SegmentationThread::~SegmentationThread() {
-    wait(); //useful?
+    wait();
 }
 
 void SegmentationThread::processImage(
@@ -22,7 +22,7 @@ void SegmentationThread::processImage(
 
 void SegmentationThread::run() {
     Mat segmentedImage;
-    bool sucessful = true;
+
     try {
         segmentedImage = segmenter.segment(
             SegmentationUtility::normalizedImage(inputImage),
@@ -36,15 +36,7 @@ void SegmentationThread::run() {
             << e.what()
             << ". "
             << "Sending empty image" << endl;
-
-        sucessful = false;
     }
 
-    if (sucessful) {
-        emit sendImage(
-            SegmentationUtility::obtainImageWithBoundary(inputImage, segmentedImage));
-    }
-    else {
-        emit sendImage(segmentedImage);   
-    }
+    emit sendImage(segmentedImage);
 }
