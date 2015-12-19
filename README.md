@@ -12,10 +12,11 @@ The following libraries should be correctly installed in the system in order
 to compile the source code:
 * Linux (preferred)
 * Qt >= 4.8.0
-* qmake >= 2.01a
 * Eigen >= 3.2.0
 * OpenCV >= 2.4.8
 * Pkg-config >= 0.26
+* GTest >= 1.6.1
+* CMake >= 3.2.0
 
 ## Compilation
 
