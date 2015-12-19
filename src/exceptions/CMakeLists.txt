@@ -1,9 +1,9 @@
+file(GLOB_RECURSE exceptions_sources *.cpp)
+file(GLOB_RECURSE exceptions_headers *.h)
+
 include_directories(${external_includes})
 
-set(exceptions_sources exception.cpp mathexception.cpp userinputexception.cpp)
-set(exceptions_headers exception.h mathexception.h userinputexception.h)
-
-add_library(exceptions SHARED
+add_library(exceptions STATIC
         ${exceptions_sources}
         ${exceptions_headers}
 )

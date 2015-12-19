@@ -1,9 +1,12 @@
+file(GLOB_RECURSE communication_sources *.cpp)
+file(GLOB_RECURSE communication_headers *.h)
+
 include_directories(${external_includes})
+include_directories(${PROJECT_SOURCE_DIR}/common/)
+include_directories(${PROJECT_SOURCE_DIR}/exceptions/)
+include_directories(${PROJECT_SOURCE_DIR}/math_tools/)
 
-set(communication_sources segmentationeventhandler.cpp segmentationeventhandler.cpp segmentationthread.cpp)
-set(communication_headers segmentationeventhandler.h segmentationeventhandler.h segmentationthread.h)
-
-add_library(communication SHARED
+add_library(communication STATIC
         ${communication_sources}
         ${communication_headers}
 )

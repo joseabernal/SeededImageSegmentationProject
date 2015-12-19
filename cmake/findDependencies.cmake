@@ -9,8 +9,8 @@ include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC OFF)
-set(CMAKE_INCLUDE_CURRENT_DIR OFF)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include_directories( ${QT_INCLUDE_DIR} )
 include_directories( ${EIGEN3_INCLUDE_DIRS} )
