@@ -10,8 +10,8 @@
 #include "displaywindow.h"
 #include "seedinputwindow.h"
 #include "ui_mainwindow.h"
-#include "Exceptions/userinputexception.h"
-#include "Communication/segmentationeventhandler.h"
+#include "src/exceptions/userinputexception.h"
+#include "src/communication/segmentationeventhandler.h"
 
 namespace Ui {
     class MainWindow;
