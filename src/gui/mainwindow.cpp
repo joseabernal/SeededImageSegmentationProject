@@ -76,6 +76,10 @@ void MainWindow::handleResult(const QImage& image) {
     disp->show();
     disp->move(100, 100);
     disp->displayImage(result);
+
+    QImage boundaryImage = comm->obtainImageWithBoundary(inputImage, result);
+
+    disp->displayImage(boundaryImage);
 }
 
 void MainWindow::on_pushButtonSeed1_clicked() {

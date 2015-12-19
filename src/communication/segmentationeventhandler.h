@@ -66,6 +66,19 @@ class SegmentationEventHandler : public QObject {
             const double beta);
         
         /**
+         * Returns the image with the boundary according to the segmentation
+         * image.
+         *
+         * @param inputImage input image
+         * @param segmentedImage binary image containing the segmentation of 
+         *  input image
+         * 
+         * @return an image containing the respective boundaries.
+         */
+        QImage obtainImageWithBoundary(
+            const QImage& inputImage, const QImage& segmentedImage);
+
+        /**
          * Load image on filePath
          *
          * @param image image to save

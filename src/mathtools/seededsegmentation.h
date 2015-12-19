@@ -30,7 +30,7 @@ class SeededSegmentation
         /**
          * Max binary value constant to use in the thresholding method.
          */
-        static const unsigned int MAX_BINARY_VALUE = 1;
+        static const unsigned int MAX_BINARY_VALUE = 255;
 
         /**
          * Threshold type to use in the thresholding method.
