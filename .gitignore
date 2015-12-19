@@ -10,6 +10,8 @@ Makefile
 CMakeCache.txt
 src/gui/gui_automoc.cpp
 src/communication/communication_automoc.cpp
+*_automoc.cpp
+ui_*
 
 # Compiled Object files
 *.slo

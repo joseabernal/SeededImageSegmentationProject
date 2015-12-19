@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) 
-    : QMainWindow(parent) {//, ui(new Ui::MainWindow) {
-    //ui->setupUi(this);
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    ui->setupUi(this);
 
     currentSeed = 0;
     seed0 = cv::Mat::zeros(256, 256, CV_8UC1);
@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
-    //delete ui;
+    delete ui;
     delete comm;
     delete disp;
     delete inp;
@@ -35,7 +35,7 @@ MainWindow::~MainWindow() {
     disp = 0;
 }
 
-/*void MainWindow::on_pushButtonOpenImage_clicked() {
+void MainWindow::on_pushButtonOpenImage_clicked() {
     //Image location dialog
     QString imagePath = QFileDialog::getOpenFileName(
         this,
@@ -59,7 +59,7 @@ MainWindow::~MainWindow() {
     inp->show();
     inp->move(100, 100);
     inp->displayImage(inputImage);
-}*/
+}
 
 void MainWindow::handleUpdatePixel(const unsigned int i, const unsigned int j) {
     if (currentSeed == 0) {
@@ -78,7 +78,7 @@ void MainWindow::handleResult(const QImage& image) {
     disp->displayImage(result);
 }
 
-/*void MainWindow::on_pushButtonSeed1_clicked() {
+void MainWindow::on_pushButtonSeed1_clicked() {
     currentSeed = 0;
     inp->setSeedColor(qRgb(0, 0, 0));
 }
@@ -95,4 +95,4 @@ void MainWindow::on_pushButtonSegmentImage_clicked() {
     else {
         throw UserInputException("An image should be selected first.");
     }
-}*/
+}

@@ -9,13 +9,13 @@
 
 #include "displaywindow.h"
 #include "seedinputwindow.h"
-//#include "ui_mainwindow.h"
+#include "ui_mainwindow.h"
 #include "src/exceptions/userinputexception.h"
 #include "src/communication/segmentationeventhandler.h"
 
-/*namespace Ui {
+namespace Ui {
     class MainWindow;
-}*/
+}
 
 /**
  * Main window of the application.
@@ -30,7 +30,7 @@ class MainWindow : public QMainWindow {
         /**
          * Ui of the application
          */
-        //Ui::MainWindow *ui;
+        Ui::MainWindow *ui;
 
         /**
          * DisplayWindow instance aiming to display the input image and seeds.
@@ -114,22 +114,22 @@ class MainWindow : public QMainWindow {
         /**
          * Method triggered when the open image button is clicked.
          */
-        //void on_pushButtonOpenImage_clicked();
+        void on_pushButtonOpenImage_clicked();
 
         /**
          * Method triggered when the seed 1 button is clicked.
          */
-        //void on_pushButtonSeed1_clicked();
+        void on_pushButtonSeed1_clicked();
 
         /**
          * Method triggered when the seed 2 button is clicked.
          */
-        //void on_pushButtonSeed2_clicked();
+        void on_pushButtonSeed2_clicked();
 
         /**
          * Method triggered when the segment button is clicked.
          */
-        //void on_pushButtonSegmentImage_clicked();
+        void on_pushButtonSegmentImage_clicked();
 };
 
 #endif
