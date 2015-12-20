@@ -16,4 +16,4 @@ include_directories( ${QT_INCLUDE_DIR} )
 include_directories( ${EIGEN3_INCLUDE_DIRS} )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-set(external_libs ${QT_LIBRARIES} ${OpenCV_LIBRARIES} ${EIGEN3_LIBRARIES} ${GTest_LIBRARIES})
+set(external_libs ${QT_LIBRARIES} ${OpenCV_LIBRARIES} ${EIGEN3_LIBRARIES} ${GTest_LIBRARIES} "-lpthread")
