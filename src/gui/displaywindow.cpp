@@ -1,7 +1,7 @@
 #include "displaywindow.h"
 
 DisplayWindow::DisplayWindow() {
-    setWindowTitle(tr("Display Window"));
+    setWindowTitle(tr("Segmentation Result"));
     resize(480, 240);
 }
 
@@ -23,9 +23,6 @@ void DisplayWindow::paintEvent(QPaintEvent* e) {
 
 void DisplayWindow::displayImage(const QImage &src) {
     image = src; 
-    
-    // Set the filename as the window title
-    setWindowTitle("Image to be segmented");
 
     // Resize the window to fit video dimensions
     resize(src.width(), src.height());
