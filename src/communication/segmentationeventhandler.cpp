@@ -53,14 +53,6 @@ QImage SegmentationEventHandler::obtainImageWithBoundary(
     return ImageTypeConverter::convertMat2QImage(result);
 }
 
-bool SegmentationEventHandler::saveImage(
-    const QImage& img, const string filePath) {
-    QImage image = img;
-    image.save(filePath.c_str());
-
-    return true;
-}
-
 void SegmentationEventHandler::handleResult(const Mat& finalImage) {
     emit sendImage(ImageTypeConverter::convertMat2QImage(finalImage));
 }
