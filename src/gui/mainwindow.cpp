@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     comm = new SegmentationEventHandler();
     inp = new SeedInputWindow();
-    disp = new DisplayWindow();
+    disp_bw = new DisplayWindow();
+    disp_c = new DisplayWindow();
 
     connect(
         comm,
@@ -28,11 +29,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete ui;
     delete comm;
-    delete disp;
+    delete disp_bw;
+    delete disp_c;
     delete inp;
     comm = 0;
     inp = 0;
-    disp = 0;
+    disp_bw = 0;
+    disp_c = 0;
 }
 
 void MainWindow::on_pushButtonOpenImage_clicked() {
@@ -73,13 +76,18 @@ void MainWindow::handleUpdatePixel(const unsigned int i, const unsigned int j) {
 void MainWindow::handleResult(const QImage& image) {
     result = image;
 
-    disp->show();
-    disp->move(100, 100);
-    disp->displayImage(result);
-
+    // Draw contour lines over segmented image
     QImage boundaryImage = comm->obtainImageWithBoundary(inputImage, result);
 
-    disp->displayImage(boundaryImage);
+    // Display binary segmentation
+    disp_bw->show();
+    disp_bw->move(100, 100);
+    disp_bw->displayImage(result);
+
+    // Display image with overlaid segmentation contour
+    disp_c->show();
+    disp_c->move(300, 300);
+    disp_c->displayImage(boundaryImage);
 }
 
 void MainWindow::on_pushButtonSeed1_clicked() {

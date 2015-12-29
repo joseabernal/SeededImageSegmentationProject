@@ -33,14 +33,19 @@ class MainWindow : public QMainWindow {
         Ui::MainWindow *ui;
 
         /**
-         * DisplayWindow instance aiming to display the input image and seeds.
+         * SeedInputWindow instance aiming to display the input image and seeds.
          */
         SeedInputWindow* inp;
 
         /**
-         * DisplayWindow instance aiming to display the input image and seeds.
+         * DisplayWindow instance aiming to display the segmentation result - BW
          */
-        DisplayWindow* disp;
+        DisplayWindow* disp_bw;
+
+        /**
+         * DisplayWindow instance aiming to display the segmentation result - contour
+         */
+        DisplayWindow* disp_c;
 
 
         /**
