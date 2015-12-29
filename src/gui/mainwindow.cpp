@@ -108,3 +108,13 @@ void MainWindow::on_pushButtonSegmentImage_clicked() {
         throw UserInputException("An image should be selected first.");
     }
 }
+
+void MainWindow::on_pushButton_saveBinary_clicked()
+{
+
+}
+
+void MainWindow::on_pushButton_saveContour_clicked()
+{
+
+}

@@ -135,6 +135,16 @@ class MainWindow : public QMainWindow {
          * Method triggered when the segment button is clicked.
          */
         void on_pushButtonSegmentImage_clicked();
+
+        /**
+         * Method triggered when the segment button is clicked.
+         */
+        void on_pushButton_saveBinary_clicked();
+
+        /**
+         * Method triggered when the segment button is clicked.
+         */
+        void on_pushButton_saveContour_clicked();
 };
 
 #endif
