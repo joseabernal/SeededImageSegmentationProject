@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     comm = new SegmentationEventHandler();
     inp = new SeedInputWindow();
-    disp = new DisplayWindow();
+    disp_bw = new DisplayWindow();
+    disp_c = new DisplayWindow();
 
     connect(
         comm,
@@ -28,11 +29,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete ui;
     delete comm;
-    delete disp;
+    delete disp_bw;
+    delete disp_c;
     delete inp;
     comm = 0;
     inp = 0;
-    disp = 0;
+    disp_bw = 0;
+    disp_c = 0;
 }
 
 void MainWindow::on_pushButtonOpenImage_clicked() {
@@ -57,7 +60,7 @@ void MainWindow::on_pushButtonOpenImage_clicked() {
     seed1 = cv::Mat::zeros(inputImage.height(), inputImage.width(), CV_8UC1);
 
     inp->show();
-    inp->move(100, 100);
+    inp->move(500, 100);
     inp->displayImage(inputImage);
 }
 
@@ -73,13 +76,18 @@ void MainWindow::handleUpdatePixel(const unsigned int i, const unsigned int j) {
 void MainWindow::handleResult(const QImage& image) {
     result = image;
 
-    disp->show();
-    disp->move(100, 100);
-    disp->displayImage(result);
+    // Draw contour lines over segmented image
+    contourImage = comm->obtainImageWithBoundary(inputImage, result);
 
-    QImage boundaryImage = comm->obtainImageWithBoundary(inputImage, result);
+    // Display binary segmentation
+    disp_bw->show();
+    disp_bw->move(100, 100);
+    disp_bw->displayImage(result);
 
-    disp->displayImage(boundaryImage);
+    // Display image with overlaid segmentation contour
+    disp_c->show();
+    disp_c->move(300, 300);
+    disp_c->displayImage(contourImage);
 }
 
 void MainWindow::on_pushButtonSeed1_clicked() {
@@ -99,4 +107,18 @@ void MainWindow::on_pushButtonSegmentImage_clicked() {
     else {
         throw UserInputException("An image should be selected first.");
     }
+}
+
+void MainWindow::on_pushButton_saveBinary_clicked()
+{
+    QString path = QFileDialog::getSaveFileName();
+    bool whatever;
+    whatever = result.save(path);
+}
+
+void MainWindow::on_pushButton_saveContour_clicked()
+{
+    QString path = QFileDialog::getSaveFileName();
+    bool whatever;
+    whatever = contourImage.save(path);
 }

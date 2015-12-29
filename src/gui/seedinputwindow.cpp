@@ -1,7 +1,7 @@
 #include "seedinputwindow.h"
 
 SeedInputWindow::SeedInputWindow() {
-    setWindowTitle(tr("Seed Input Window"));
+    setWindowTitle(tr("Image To Be Segmented"));
 
     resize(480, 240);
 
