@@ -20,7 +20,7 @@ using cv::Mat;
 /**
  * This class handles the events of the UI classes.
  *
- * @author Jose Bernal
+ * @author Jose Bernal & Rodrigo Daudt
  */
 class SegmentationEventHandler : public QObject {
     Q_OBJECT
@@ -86,7 +86,7 @@ class SegmentationEventHandler : public QObject {
          *
          * @return true if the process was successful
          */
-        bool saveImage(const QImage& image, const string filePath);
+        bool saveImage(const QImage& image, const QString& path);
 
     private slots:
 
