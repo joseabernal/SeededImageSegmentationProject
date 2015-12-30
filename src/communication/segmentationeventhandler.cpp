@@ -53,8 +53,7 @@ QImage SegmentationEventHandler::obtainImageWithBoundary(
     return ImageTypeConverter::convertMat2QImage(result);
 }
 
-bool SegmentationEventHandler::saveImage(const QImage& image) {
-    QString path = QFileDialog::getSaveFileName();
+bool SegmentationEventHandler::saveImage(const QImage& image, const QString& path) {
     return image.save(path);
 }
 

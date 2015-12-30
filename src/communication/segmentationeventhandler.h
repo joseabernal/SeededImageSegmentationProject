@@ -3,7 +3,6 @@
 
 #include <QImage>
 #include <QMetaType>
-#include <QFileDialog>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -87,7 +86,7 @@ class SegmentationEventHandler : public QObject {
          *
          * @return true if the process was successful
          */
-        bool saveImage(const QImage& image);
+        bool saveImage(const QImage& image, const QString& path);
 
     private slots:
 

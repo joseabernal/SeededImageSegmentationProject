@@ -111,12 +111,14 @@ void MainWindow::on_pushButtonSegmentImage_clicked() {
 
 void MainWindow::on_pushButton_saveBinary_clicked()
 {
+    QString path = QFileDialog::getSaveFileName();
     bool successful_save;
-    successful_save = comm->saveImage(result);
+    successful_save = comm->saveImage(result, path);
 }
 
 void MainWindow::on_pushButton_saveContour_clicked()
 {
+    QString path = QFileDialog::getSaveFileName();
     bool successful_save;
-    successful_save = comm->saveImage(contourImage);
+    successful_save = comm->saveImage(contourImage, path);
 }
