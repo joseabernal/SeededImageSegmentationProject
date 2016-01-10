@@ -12,10 +12,12 @@ SeedInputWindow::~SeedInputWindow() {
 }
 
 void SeedInputWindow::mouseMoveEvent(QMouseEvent *event) {
+    // Check if an image is loaded
     if (image.isNull()) {
         throw UserInputException("Empty image cannot be displayed");
     }
 
+    // Gets event position
     QPoint pos = event->pos();
     if (pos.x() < 0 || pos.x() >= image.width()) {
         return;
@@ -24,11 +26,13 @@ void SeedInputWindow::mouseMoveEvent(QMouseEvent *event) {
         return;
     }
 
+    // Extract variables once to improve loop
     int x = pos.x();
     int y = pos.y();
     int w = image.width();
     int h = image.height();
 
+    // Paint seed
     for(int i = -5; i <= 5; i++) {
         for(int j = -5; j <= 5; j++) {
             if(x + i >= 0 && x + i < w && y + j >= 0 && y + j < h) {
@@ -43,6 +47,7 @@ void SeedInputWindow::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void SeedInputWindow::setSeedColor(QRgb newColor) {
+    // Set color that will be painted for current seed
     seedColor = newColor;
     return;
 }

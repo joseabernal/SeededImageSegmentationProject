@@ -6,6 +6,8 @@
 /**
  * Class in charge of input of segmentation seeds
  *
+ * @see Karl Phillip, https://github.com/karlphillip/GraphicsProgramming
+ *
  * @author Rodrigo Daudt
  */
 class SeedInputWindow : public DisplayWindow
