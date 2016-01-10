@@ -1,0 +1,155 @@
+\hypertarget{classSegmentationEventHandler}{\section{Segmentation\-Event\-Handler Class Reference}
+\label{classSegmentationEventHandler}\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}}
+}
+
+
+{\ttfamily \#include $<$segmentationeventhandler.\-h$>$}
+
+Inheritance diagram for Segmentation\-Event\-Handler\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classSegmentationEventHandler}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classSegmentationEventHandler_a7e0469cfa7b7de154a7f4ab89aa5d01c}{send\-Image} (const Q\-Image \&final\-Image)
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSegmentationEventHandler_ae9ae201d2babf6d7a75039b1df9914ac}{Segmentation\-Event\-Handler} ()
+\item 
+\hyperlink{classSegmentationEventHandler_a0ed321c52deb44c8db76b0d100e8b614}{$\sim$\-Segmentation\-Event\-Handler} ()
+\item 
+Q\-Image \hyperlink{classSegmentationEventHandler_a40df09d50701ea6490b5ba6bb1841919}{load\-Image} (const string file\-Path)
+\item 
+void \hyperlink{classSegmentationEventHandler_a8111dd952df6dca9f13ac0aa6bf4105b}{segment} (const Q\-Image \&image, const Mat \&background\-Image, const Mat \&foreground\-Image, const double beta)
+\item 
+Q\-Image \hyperlink{classSegmentationEventHandler_adfa64d0cda9254629fea83982c0a22e2}{obtain\-Image\-With\-Boundary} (const Q\-Image \&input\-Image, const Q\-Image \&segmented\-Image)
+\item 
+bool \hyperlink{classSegmentationEventHandler_a2e82ef87339a521615c721e5706f69b9}{save\-Image} (const Q\-Image \&image, const Q\-String \&path)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class handles the events of the U\-I classes.
+
+\begin{DoxyAuthor}{Author}
+Jose Bernal \& Rodrigo Daudt 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classSegmentationEventHandler_ae9ae201d2babf6d7a75039b1df9914ac}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}}
+\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{Segmentation\-Event\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}Segmentation\-Event\-Handler\-::\-Segmentation\-Event\-Handler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationEventHandler_ae9ae201d2babf6d7a75039b1df9914ac}
+Default constructor. \hypertarget{classSegmentationEventHandler_a0ed321c52deb44c8db76b0d100e8b614}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!$\sim$\-Segmentation\-Event\-Handler@{$\sim$\-Segmentation\-Event\-Handler}}
+\index{$\sim$\-Segmentation\-Event\-Handler@{$\sim$\-Segmentation\-Event\-Handler}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{$\sim$\-Segmentation\-Event\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}Segmentation\-Event\-Handler\-::$\sim$\-Segmentation\-Event\-Handler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationEventHandler_a0ed321c52deb44c8db76b0d100e8b614}
+Class destructor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classSegmentationEventHandler_a40df09d50701ea6490b5ba6bb1841919}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!load\-Image@{load\-Image}}
+\index{load\-Image@{load\-Image}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{load\-Image}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Image Segmentation\-Event\-Handler\-::load\-Image (
+\begin{DoxyParamCaption}
+\item[{const string}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationEventHandler_a40df09d50701ea6490b5ba6bb1841919}
+Load image on file\-Path
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\-Path} & path of the file to load\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Q\-Image loaded image 
+\end{DoxyReturn}
+\hypertarget{classSegmentationEventHandler_adfa64d0cda9254629fea83982c0a22e2}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!obtain\-Image\-With\-Boundary@{obtain\-Image\-With\-Boundary}}
+\index{obtain\-Image\-With\-Boundary@{obtain\-Image\-With\-Boundary}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{obtain\-Image\-With\-Boundary}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Image Segmentation\-Event\-Handler\-::obtain\-Image\-With\-Boundary (
+\begin{DoxyParamCaption}
+\item[{const Q\-Image \&}]{input\-Image, }
+\item[{const Q\-Image \&}]{segmented\-Image}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationEventHandler_adfa64d0cda9254629fea83982c0a22e2}
+Returns the image with the boundary according to the segmentation image.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\-Image} & input image \\
+\hline
+{\em segmented\-Image} & binary image containing the segmentation of input image\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an image containing the respective boundaries. 
+\end{DoxyReturn}
+\hypertarget{classSegmentationEventHandler_a2e82ef87339a521615c721e5706f69b9}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!save\-Image@{save\-Image}}
+\index{save\-Image@{save\-Image}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{save\-Image}]{\setlength{\rightskip}{0pt plus 5cm}bool Segmentation\-Event\-Handler\-::save\-Image (
+\begin{DoxyParamCaption}
+\item[{const Q\-Image \&}]{image, }
+\item[{const Q\-String \&}]{path}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationEventHandler_a2e82ef87339a521615c721e5706f69b9}
+Load image on file\-Path
+
+
+\begin{DoxyParams}{Parameters}
+{\em image} & image to save \\
+\hline
+{\em file\-Path} & path to save the image\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the process was successful 
+\end{DoxyReturn}
+\hypertarget{classSegmentationEventHandler_a8111dd952df6dca9f13ac0aa6bf4105b}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!segment@{segment}}
+\index{segment@{segment}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{segment}]{\setlength{\rightskip}{0pt plus 5cm}void Segmentation\-Event\-Handler\-::segment (
+\begin{DoxyParamCaption}
+\item[{const Q\-Image \&}]{image, }
+\item[{const Mat \&}]{background\-Image, }
+\item[{const Mat \&}]{foreground\-Image, }
+\item[{const double}]{beta}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationEventHandler_a8111dd952df6dca9f13ac0aa6bf4105b}
+Calls the seededsegmentation class with the given inputs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em image} & image to be segmented \\
+\hline
+{\em background\-Image} & background image to segment \\
+\hline
+{\em foreground\-Image} & foreground image to segment \\
+\hline
+{\em beta} & tuning variable \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSegmentationEventHandler_a7e0469cfa7b7de154a7f4ab89aa5d01c}{\index{Segmentation\-Event\-Handler@{Segmentation\-Event\-Handler}!send\-Image@{send\-Image}}
+\index{send\-Image@{send\-Image}!SegmentationEventHandler@{Segmentation\-Event\-Handler}}
+\subsubsection[{send\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void Segmentation\-Event\-Handler\-::send\-Image (
+\begin{DoxyParamCaption}
+\item[{const Q\-Image \&}]{final\-Image}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classSegmentationEventHandler_a7e0469cfa7b7de154a7f4ab89aa5d01c}
+Signal emitted when the result after segmentation is obtained. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/communication/segmentationeventhandler.\-h\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/communication/moc\-\_\-segmentationeventhandler.\-cpp\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/communication/segmentationeventhandler.\-cpp\end{DoxyCompactItemize}

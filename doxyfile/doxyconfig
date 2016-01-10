@@ -1,0 +1,7 @@
+PROJECT_NAME = Seeded Image Segmentation
+INPUT = ../src main-page.dox
+GENERATE_HTML = YES
+HTML_OUTPUT = html/
+HTML_FILE_EXTENSION = .html
+RECURSIVE = YES
+INPUT += ../README.md
