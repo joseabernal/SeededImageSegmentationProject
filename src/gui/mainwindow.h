@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QMainWindow>
+#include <QInputDialog>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -82,6 +83,11 @@ class MainWindow : public QMainWindow {
          * Number of the current seed.
          */
         unsigned int currentSeed;
+
+        /**
+         * True if segmentation results are ready
+         */
+        bool segmentationOccurred;
 
     public:
 
