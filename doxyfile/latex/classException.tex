@@ -1,0 +1,89 @@
+\hypertarget{classException}{\section{Exception Class Reference}
+\label{classException}\index{Exception@{Exception}}
+}
+
+
+{\ttfamily \#include $<$exception.\-h$>$}
+
+Inheritance diagram for Exception\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classException}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classException_a9509cd7ac8060afe83e6a483a5037305}{Exception} (const string \hyperlink{classException_adcb29a6ce336e7223a521e19cbd286a7}{name}, const string \hyperlink{classException_a3d5051a55e7133196d3097a5cd2d58a7}{message})
+\item 
+virtual \hyperlink{classException_ad1ba411de295ef2eeb02ba26284a829a}{$\sim$\-Exception} ()  throw ()
+\item 
+virtual const char $\ast$ \hyperlink{classException_a78154a31544a609cbd226d32574f52cd}{what} () const   throw ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const string \hyperlink{classException_adcb29a6ce336e7223a521e19cbd286a7}{name}
+\item 
+const string \hyperlink{classException_a3d5051a55e7133196d3097a5cd2d58a7}{message}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents the exceptions that can be in the app. Every exception class should inherit from this one.
+
+\begin{DoxyAuthor}{Author}
+Jose Bernal 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classException_a9509cd7ac8060afe83e6a483a5037305}{\index{Exception@{Exception}!Exception@{Exception}}
+\index{Exception@{Exception}!Exception@{Exception}}
+\subsubsection[{Exception}]{\setlength{\rightskip}{0pt plus 5cm}Exception\-::\-Exception (
+\begin{DoxyParamCaption}
+\item[{const string}]{name, }
+\item[{const string}]{message}
+\end{DoxyParamCaption}
+)}}\label{classException_a9509cd7ac8060afe83e6a483a5037305}
+Default class constructor
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name of the exception \\
+\hline
+{\em message} & Message to display \\
+\hline
+\end{DoxyParams}
+\hypertarget{classException_ad1ba411de295ef2eeb02ba26284a829a}{\index{Exception@{Exception}!$\sim$\-Exception@{$\sim$\-Exception}}
+\index{$\sim$\-Exception@{$\sim$\-Exception}!Exception@{Exception}}
+\subsubsection[{$\sim$\-Exception}]{\setlength{\rightskip}{0pt plus 5cm}virtual Exception\-::$\sim$\-Exception (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classException_ad1ba411de295ef2eeb02ba26284a829a}
+Default destructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classException_a78154a31544a609cbd226d32574f52cd}{\index{Exception@{Exception}!what@{what}}
+\index{what@{what}!Exception@{Exception}}
+\subsubsection[{what}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ Exception\-::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classException_a78154a31544a609cbd226d32574f52cd}
+Inherited 
+
+\subsection{Member Data Documentation}
+\hypertarget{classException_a3d5051a55e7133196d3097a5cd2d58a7}{\index{Exception@{Exception}!message@{message}}
+\index{message@{message}!Exception@{Exception}}
+\subsubsection[{message}]{\setlength{\rightskip}{0pt plus 5cm}const string Exception\-::message\hspace{0.3cm}{\ttfamily [protected]}}}\label{classException_a3d5051a55e7133196d3097a5cd2d58a7}
+Message to display \hypertarget{classException_adcb29a6ce336e7223a521e19cbd286a7}{\index{Exception@{Exception}!name@{name}}
+\index{name@{name}!Exception@{Exception}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}const string Exception\-::name\hspace{0.3cm}{\ttfamily [protected]}}}\label{classException_adcb29a6ce336e7223a521e19cbd286a7}
+Name of the exception to display 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/exceptions/exception.\-h\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/exceptions/exception.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,108 @@
+\hypertarget{classSegmentationThread}{\section{Segmentation\-Thread Class Reference}
+\label{classSegmentationThread}\index{Segmentation\-Thread@{Segmentation\-Thread}}
+}
+
+
+{\ttfamily \#include $<$segmentationthread.\-h$>$}
+
+Inheritance diagram for Segmentation\-Thread\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classSegmentationThread}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classSegmentationThread_a2e74f10ff17d3f8d1c8d0767b6ff5e5e}{send\-Image} (const Mat \&image)
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSegmentationThread_a5c5b9a1f21e114db574804220a7c2c21}{Segmentation\-Thread} ()
+\item 
+\hyperlink{classSegmentationThread_a3f8e826a615355c7ee2abb76601d2deb}{$\sim$\-Segmentation\-Thread} ()
+\item 
+void \hyperlink{classSegmentationThread_af901597e735165b6ef3b894826779eff}{process\-Image} (const Mat \&input\-Image, const Mat \&background\-Image, const Mat \&foreground\-Image, const \hyperlink{classNeighbourhood}{Neighbourhood} \&neighbourhood, const double beta)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classSegmentationThread_ad98d9532eb60741d884849f26f62c38c}{run} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is in charge of the segmentation process.
+
+\begin{DoxySeeAlso}{See Also}
+\href{http://doc.qt.io/qt-5/qtcore-threads-queuedcustomtype-renderthread-h.html}{\tt http\-://doc.\-qt.\-io/qt-\/5/qtcore-\/threads-\/queuedcustomtype-\/renderthread-\/h.\-html}
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Jose Bernal 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classSegmentationThread_a5c5b9a1f21e114db574804220a7c2c21}{\index{Segmentation\-Thread@{Segmentation\-Thread}!Segmentation\-Thread@{Segmentation\-Thread}}
+\index{Segmentation\-Thread@{Segmentation\-Thread}!SegmentationThread@{Segmentation\-Thread}}
+\subsubsection[{Segmentation\-Thread}]{\setlength{\rightskip}{0pt plus 5cm}Segmentation\-Thread\-::\-Segmentation\-Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationThread_a5c5b9a1f21e114db574804220a7c2c21}
+Default constructor. \hypertarget{classSegmentationThread_a3f8e826a615355c7ee2abb76601d2deb}{\index{Segmentation\-Thread@{Segmentation\-Thread}!$\sim$\-Segmentation\-Thread@{$\sim$\-Segmentation\-Thread}}
+\index{$\sim$\-Segmentation\-Thread@{$\sim$\-Segmentation\-Thread}!SegmentationThread@{Segmentation\-Thread}}
+\subsubsection[{$\sim$\-Segmentation\-Thread}]{\setlength{\rightskip}{0pt plus 5cm}Segmentation\-Thread\-::$\sim$\-Segmentation\-Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationThread_a3f8e826a615355c7ee2abb76601d2deb}
+Class destructor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classSegmentationThread_af901597e735165b6ef3b894826779eff}{\index{Segmentation\-Thread@{Segmentation\-Thread}!process\-Image@{process\-Image}}
+\index{process\-Image@{process\-Image}!SegmentationThread@{Segmentation\-Thread}}
+\subsubsection[{process\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void Segmentation\-Thread\-::process\-Image (
+\begin{DoxyParamCaption}
+\item[{const Mat \&}]{input\-Image, }
+\item[{const Mat \&}]{background\-Image, }
+\item[{const Mat \&}]{foreground\-Image, }
+\item[{const {\bf Neighbourhood} \&}]{neighbourhood, }
+\item[{const double}]{beta}
+\end{DoxyParamCaption}
+)}}\label{classSegmentationThread_af901597e735165b6ef3b894826779eff}
+Calls the seededsegmentation class with the given inputs. This call is asynchronous. The result of this process is given by the slot
+
+
+\begin{DoxyParams}{Parameters}
+{\em image} & image to be segmented \\
+\hline
+{\em background\-Image} & background image to segment \\
+\hline
+{\em foreground\-Image} & foreground image to segment \\
+\hline
+{\em beta} & tuning variable \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSegmentationThread_ad98d9532eb60741d884849f26f62c38c}{\index{Segmentation\-Thread@{Segmentation\-Thread}!run@{run}}
+\index{run@{run}!SegmentationThread@{Segmentation\-Thread}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void Segmentation\-Thread\-::run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classSegmentationThread_ad98d9532eb60741d884849f26f62c38c}
+Calls the segment method of \hyperlink{classSeededSegmentation}{Seeded\-Segmentation}. \hypertarget{classSegmentationThread_a2e74f10ff17d3f8d1c8d0767b6ff5e5e}{\index{Segmentation\-Thread@{Segmentation\-Thread}!send\-Image@{send\-Image}}
+\index{send\-Image@{send\-Image}!SegmentationThread@{Segmentation\-Thread}}
+\subsubsection[{send\-Image}]{\setlength{\rightskip}{0pt plus 5cm}void Segmentation\-Thread\-::send\-Image (
+\begin{DoxyParamCaption}
+\item[{const Mat \&}]{image}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{classSegmentationThread_a2e74f10ff17d3f8d1c8d0767b6ff5e5e}
+Signal containing a the matrix with the segmentation 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/communication/segmentationthread.\-h\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/communication/moc\-\_\-segmentationthread.\-cpp\item 
+/home/jose/\-Documents/\-Seeded\-Image\-Segmentation\-Project/src/communication/segmentationthread.\-cpp\end{DoxyCompactItemize}
