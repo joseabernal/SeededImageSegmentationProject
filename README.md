@@ -24,7 +24,7 @@ to compile the source code:
 
 To compile the source code, the following steps should be followed:
 * Open the console in the folder containing the project.
-* Run qmake -project to generate the Makefile. Verify that the Makefile is created.
-* Run make. Verify that there is no error while compiling and also
+* Run "cmake ." to generate the Makefile. Verify that the Makefile is created.
+* Run "make". Verify that there is no error while compiling and also
 that a SeededImageSegmentationProject file is created.
-* To run the application, you should run ./SeededImageSegmentationProject
+* To run the application, you should run ./main in "../bin/"
